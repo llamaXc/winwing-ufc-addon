@@ -1,4 +1,4 @@
-# READ ME | Winwing UFC Addon
+# READ ME | Winwing Universal UFC Addon
 
 **Contact Information**
 Email: preston.meade1@gmail.com
