@@ -40,7 +40,7 @@ For those wanting to make a [Pull Request](https://github.com/llamaXc/winwing-uf
 	- Keep in mind, the UFC displays are LCD and only have so many segments, thus you are limited to the characters you can display.  Here is the supported data that can be shown on the UFC
 	- Use the already provided DCS functions to get data from the game. See this [Export.lua](https://github.com/sprhawk/dcs_scripts/blob/master/Export.lua) for a good example of what data you can access.
 	- This data table is an example of what data is shown on the UFC. Scenario is F18 UFC Tacan Menu
-	![Example of F18 UFC with matching data below](https://github.com/llamaXc/winwing-ufc-addon/blob/master/images/f18ufc.png?raw=true)
+	![Example of F18 UFC with matching data below](https://github.com/llamaXc/winwing-ufc-addon/blob/master/images/f18ufc.png)
 
 |Window Name| Description | Location |Compatible Data|F18 Example Data
 |--|--|--|--|--|
