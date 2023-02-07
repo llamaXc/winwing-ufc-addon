@@ -10,12 +10,16 @@ Hi! This is my attempt at getting the **Winwing F18 UFC** to work with other DCS
 **Help, it is not working!**
 The most likely cause is SimApp Pro overwrite the updated `wwt` folder. Check the `Scripts/wwt/wwtExport.lua` and on line 30 ensure you see mention of `ufcPatch` (this addon).
 
-**Some notes:** This solution depends on the current state of **SimApp Pro** and how it manages the F18 UFC. This is not an ideal way of accomplishing this task, but with SimApp Pro being a compiled executable and not easily changeable, this is the was the simplest way I saw to get the UFC working with other modules.
+### Disclaimer
+This solution depends on the current state of **SimApp Pro** and how it manages the F18 UFC. This is not an ideal way of accomplishing this task, but with SimApp Pro being a compiled executable and not easily changeable, this is the was the simplest way I saw to get the UFC working with other modules.
+
+### How does data get shown on the UFC?
 When flying other modules, this addon will mimic the F18 messages to **SimApp Pro** containing the UFC payload but filled with our target data. In the event **SimApp Pro** changes how it reads UFC state from DCS< a change will be required in this add on. SimApp Pro thinks we are flying an F18, and this add-on sends the proper messages to get SimApp Pro to show our data on the real UFC Device.
 
 
 
 # Installation
+This is easier than it seems, just added every step for all tech levels. TLDR: Replace the `Scripts/wwt` folder with the [wwt](https://github.com/llamaXc/winwing-ufc-addon/tree/main/wwt) folder from inside this repo.
 
  1. Download this repository and open folder on your computer.
  2. Unzip the .zip file using 7-zip or some other compression program.
@@ -29,6 +33,11 @@ When flying other modules, this addon will mimic the F18 messages to **SimApp Pr
 	 - **UH1 Huey**: Example template that displays basic information on the UFC
 6. Fly DCS and verify UFC is working.
 7. If something does not look right, take a look at `<USER>/Saved Games/<DCS>/Logs/dcs.log` and look for any errors from the `WWT` log output. You can also file an [issue](https://github.com/llamaXc/winwing-ufc-addon/issues) if you are having problems.
+
+## Known limitations
+- The brightness is hard-coded to 80% for the LCD displays. I have not yet found a way to sync it easily across modules, so for now its always light.
+- This is not a permeante feature, if Winwing changes SimApp Pro UFC logic, this would effect this add-on and require updates. If that happens I'll share a fix as soon as possible here.
+- If anymore are discovered they will be added here.
 
 ## Adding more modules
 
