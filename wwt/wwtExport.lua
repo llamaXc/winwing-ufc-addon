@@ -25,6 +25,12 @@ do
 		_winwing.net=require("wwtNetwork")
 		--启动网络
 		_winwing.net.start()
+
+		-- Include UFC Patch files and initalize
+		_winwing.ufcPatch=require("ufcPatch\\ufcPatch")
+		_winwing.ufcPatch.ufcPatchUtils=require("ufcPatch\\ufcPatchUtils")
+		_winwing.ufcPatch.initializeUFC()
+
 		--网络就绪
 		local _send={}
 		_send["func"]="net"
@@ -64,6 +70,14 @@ do
 						local _send={}
 						_send["func"]="mod"
 						_send["msg"]=_self.Name
+
+						-- Required to trick SimApp Pro into allowing UFC/Com/Scratch pad commands
+						local isF18 = _self.Name == 'FA-18C_hornet'
+						if isF18 == false then
+							_winwing.ufcPatch.useCustomUFC = true
+							_send["msg"]="FA-18C_hornet"
+						end
+
 						_winwing.net.send(_send)
 					end
 				end
@@ -176,12 +190,41 @@ do
 								_sendOutput["args"][_dev]={}
 							end
 							_sendOutput["args"][_dev][_key]=_valNew
+
+							-- Force update LCD brightness to 80% for UFC
+							-- Required since SimApp Pro expects datum id 109 to be the UFC brightness
+							if _winwing.ufcPatch.useCustomUFC then
+								_sendOutput["args"]["0"] = {}
+								_sendOutput["args"]["0"]["109"] = 0.8
+								_sendOutput["args"][_dev][_key]=_valNew
+							end
 						end
 					end
 				end
+
 				if _sendOutput["args"]~=nil then
 					_winwing.net.send(_sendOutput)
 				end
+
+
+				if _winwing.ufcPatch.useCustomUFC then
+					local ufcPayload  = _winwing.ufcPatch.getUFCPayloadByModuleType(_winwing.mod)
+
+					-- Detect new custom UFC values, then send to SimApp Pro
+					if ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
+						_winwing.ufcPatch.prevUFCPayload = ufcPayload
+						local ufcCommon={}
+						ufcCommon["func"]="addCommon"
+						ufcCommon["timestamp"]=t
+						ufcCommon["args"]={}
+						-- Trick SimApp Pro into thinking we are using the F18 and F18 UFC
+						-- But we pass in the custom UFC values.
+						ufcCommon["args"]["FA-18C_hornet"] = ufcPayload
+						log.write("WWT", log.INFO, "Sending UFC Payload: "..ufcPayload)
+						_winwing.net.send(ufcCommon)
+					end
+				end
+
 				--发送之前添加的公共接口（变化发送）
 				local _sendCommon={}
 				_sendCommon["func"]="addCommon"
