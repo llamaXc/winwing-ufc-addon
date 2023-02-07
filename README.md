@@ -39,6 +39,13 @@ This is easier than it seems, just added every step for all tech levels. TLDR: R
 - This is not a permeante feature, if Winwing changes SimApp Pro UFC logic, this would effect this add-on and require updates. If that happens I'll share a fix as soon as possible here.
 - If anymore are discovered they will be added here.
 
+## What is next to come?
+- Perhaps showing Master Arm on/off state and controlling via UFC for other modules
+- In F14 show selected weapon or remaining gun ammo
+- Store count in Apache or airspeed/altitude/heading/vsi information
+- Radio channels in the Huey
+- Really anything you can think of can be added. These are just examples to give you some inspritation. If you really want one, leave an issue on this project and I can add it.
+
 ## Adding more modules
 
 If you find this add on useful and want to see more features, leave an [issue](https://github.com/llamaXc/winwing-ufc-addon/issues) request on this project and myself or someone else can look into adding it.
