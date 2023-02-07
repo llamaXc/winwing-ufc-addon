@@ -21,6 +21,8 @@ When flying other modules, this addon will mimic the F18 messages to **SimApp Pr
 # Installation
 This is easier than it seems, just added every step for all tech levels. TLDR: Replace the `Scripts/wwt` folder with the [wwt](https://github.com/llamaXc/winwing-ufc-addon/tree/main/wwt) folder from inside this repo.
 
+[Video guide if you get stuck](https://www.youtube.com/watch?v=S2rf9dnmc-g)
+
  1. Download this repository and open folder on your computer.
  2. Unzip the .zip file using 7-zip or some other compression program.
  3. You will have a folder titled `winwing-ufc-addon`. Open this folder to see `wwt` `README` and `license`
