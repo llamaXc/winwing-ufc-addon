@@ -20,9 +20,9 @@ When flying other modules, this addon will mimic the F18 messages to **SimApp Pr
  1. Download this repository and open folder on your computer.
  2. Unzip the .zip file using 7-zip or some other compression program.
  3. You will have a folder titled `winwing-ufc-addon`. Open this folder to see `wwt` `README` and `license`
- 4. Copy the `wwt` folder into `<USER>/Saved Games/<DCS>/Scripts/` and replace the existing `wwt` folder
- 5. Ensure SimApp Pro is running
+ 4. Ensure SimApp Pro is running
 	 - **Note**: SimApp Pro may overwrite `Scripts/wwt/wwtExport.lua`. If this happens, this add-on will need to be re-copied over. This may happen during a SimApp Pro update or clicking "Repair Lua" in SimApp Pro Settings.
+ 5. Copy the `wwt` folder into `<USER>/Saved Games/<DCS>/Scripts/` and replace the existing `wwt` folder
  6. Launch DCS
  7. Select a compatible module. 
 	 - **AV88 Harrier**: Supports ODU and UFC replica of DCS
