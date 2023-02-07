@@ -7,6 +7,9 @@ DCS Forms: prestonflying
 
 Hi! This is my attempt at getting the **Winwing F18 UFC** to work with other DCS Modules. The goal was to create a simple, easily expandable way of sending DCS module information to the **Winwing F18 UFC**.  The result is an updated Winwing lua file that just needs to be copied into your Saved Games/DCS/Scripts folder. See instructions below!
 
+**Help, it is not working!**
+The most likely cause is SimApp Pro overwrite the updated `wwt` folder. Check the `Scripts/wwt/wwtExport.lua` and on line 30 ensure you see mention of `ufcPatch` (this addon).
+
 **Some notes:** This solution depends on the current state of **SimApp Pro** and how it manages the F18 UFC. This is not an ideal way of accomplishing this task, but with SimApp Pro being a compiled executable and not easily changeable, this is the was the simplest way I saw to get the UFC working with other modules.
 When flying other modules, this addon will mimic the F18 messages to **SimApp Pro** containing the UFC payload but filled with our target data. In the event **SimApp Pro** changes how it reads UFC state from DCS< a change will be required in this add on. SimApp Pro thinks we are flying an F18, and this add-on sends the proper messages to get SimApp Pro to show our data on the real UFC Device.
 
