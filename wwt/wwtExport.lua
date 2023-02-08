@@ -208,6 +208,10 @@ do
 
 
 				if _winwing.ufcPatch.useCustomUFC then
+					-- Update our clock in UFC Patch so we know current time
+					_winwing.ufcPatch.updateClock(_winwing.interval)
+
+					-- Generate the payload to send to SimApp Pro
 					local ufcPayload  = _winwing.ufcPatch.getUFCPayloadByModuleType(_winwing.mod)
 
 					-- Detect new custom UFC values, then send to SimApp Pro
