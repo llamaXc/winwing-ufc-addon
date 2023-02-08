@@ -6,14 +6,16 @@
 - DCS Forums: prestonflying
 
 ### About this project
-Hi! This is my attempt at getting the **Winwing F18 UFC** to work with other DCS Modules. The goal was to create a simple, easily expandable way of sending DCS module information to the **Winwing F18 UFC**.  The result is an updated Winwing lua file that just needs to be copied into your Saved Games/DCS/Scripts folder. **See instructions below!**
+Hi! This is my attempt at getting the **Winwing F18 UFC** to work with other DCS Modules. The goal was to create a simple, easily expandable way of sending DCS module information to the **Winwing F18 UFC**.  The result is an updated Winwing lua folder that just needs to be copied into your Saved Games/DCS/Scripts folder. **See instructions below!** 
+
+This does not limit any Winwing product functionallity and it 100% compatible. 
 
 <p align="center"><img src="https://user-images.githubusercontent.com/11560596/217621077-7eaeb60c-59df-499f-b521-9180c09a1ab7.png" width="80%"/></p>
 
 </hr>
 
 # Installation
-This is easier than it seems, just added every step for all tech levels.
+#### This is easier than it seems, just added every step for all tech levels.
 **TLDR**: Replace the `Scripts/wwt` folder with the downloaded  <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.1/wwt.zip" download>Latest Release wwt<a/>.
 
  1. Download the <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.1/wwt.zip" download>Latest Release<a/>
