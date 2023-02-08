@@ -27,14 +27,19 @@ This is easier than it seems, just added every step for all tech levels. TLDR: R
  2. Unzip the .zip file using 7-zip or some other compression program.
  3. You will have a folder titled `winwing-ufc-addon`. Open this folder to see `wwt` `README` and `license`
  4. Ensure SimApp Pro is running
-	 - **Note**: SimApp Pro may overwrite `Scripts/wwt/wwtExport.lua`. If this happens, this add-on will need to be re-copied over. This may happen during a SimApp Pro update or clicking "Repair Lua" in SimApp Pro Settings.
- 5. Copy the `wwt` folder into `<USER>/Saved Games/<DCS>/Scripts/` and replace the existing `wwt` folder
- 6. Launch DCS
- 7. Select a compatible module. 
+	 - **Note**: SimApp Pro may overwrite `Scripts/wwt/wwtExport.lua`. If this happens, this add-on will need to be re-copied over. This may happen during a SimApp Pro update or clicking "Repair Lua" in SimApp Pro Settings. See Note on step 6 for a more permanent way to install.
+ 5. Make a copy of your `<USER>/Saved Games/<DCS>/Scripts/wwt` folder incase you ever want to undo these changes, I keep mine on my desktop just in case.
+ 6. Copy the `wwt` folder into `<USER>/Saved Games/<DCS>/Scripts/` and replace the existing `wwt` folder
+    - **Note: More permanent  install (until SimApp Pro has a version update)**: Make Replace `C:\Program Files (x86)\SimAppPro\resources\app.asar.unpacked\Events\wwt` with the `wwt` folder from step 3 (the one you also copied in step 5. This makes it so every time SimApp Pro starts up, it will not overwrite your add-on).
+
+ 7. Launch DCS
+ 8. Select a compatible module. 
 	 - **AV88 Harrier**: Supports ODU and UFC replica of DCS
-	 - **UH1 Huey**: Example template that displays basic information on the UFC
-6. Fly DCS and verify UFC is working.
-7. If something does not look right, take a look at `<USER>/Saved Games/<DCS>/Logs/dcs.log` and look for any errors from the `WWT` log output. You can also file an [issue](https://github.com/llamaXc/winwing-ufc-addon/issues) if you are having problems.
+	 - **UH1 Huey**: Supports Radar Altimeter on scratch pad
+	 - **A-10C2**: Supports static text on the option displays. FUNC, HACK, LTR, MK, ALT
+	 - **MyCustomModuleExample**: Shows an example of adding a new module
+9. Fly DCS and verify UFC is working.
+10. If something does not look right, take a look at `<USER>/Saved Games/<DCS>/Logs/dcs.log` and look for any errors from the `WWT` log output. You can also file an [issue](https://github.com/llamaXc/winwing-ufc-addon/issues) if you are having problems.
 
 ## Known limitations
 - The brightness is hard-coded to 80% for the LCD displays. I have not yet found a way to sync it easily across modules, so for now its always light.
