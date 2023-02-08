@@ -47,11 +47,6 @@ local buildSimAppProUFCPayload = function(simAppProUFCDataMap)
     local com1 = buildSimAppProUFCCommand("UFC_Comm1Display", simAppProUFCDataMap.com1)
     local com2 = buildSimAppProUFCCommand("UFC_Comm2Display", simAppProUFCDataMap.com2)
 
-    log.write("WWT", log.INFO, "Lenght of selected window="..#simAppProUFCDataMap.selectedWindows)
-    for k,v in pairs(simAppProUFCDataMap.selectedWindows) do
-        log.write("WWT", log.INFO,"SELECTED WINDOW="..v..".")
-      end
-
     local cuedWindowsPayload = buildSimAppProCuedWindowPayload(simAppProUFCDataMap.selectedWindows)
     return option1..option2..option3..option4..option5..com1..com2..scratchDigits..scratchLeftString..scrathRightString..cuedWindowsPayload
 end
