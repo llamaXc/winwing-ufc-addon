@@ -1,6 +1,5 @@
 ufcPatchUtils={}
 
-local commonUFCKey = "commonUFCKey"
 local SimAppProUFCCuedOptionBase = "UFC_OptionCueing"
 local SimAppProDelimeter = '-----------------------------------------'
 local SimAppProNewLine = '\n'
@@ -54,7 +53,7 @@ local buildSimAppProCuedWindowPayload = function(selectedWindowsTable)
         cuedWindows[SimAppProUFCCuedOptionBase..i] = ""
     end
 
-    for index,windowPosition in ipairs(selectedWindows) do
+    for index, windowPosition in ipairs(selectedWindows) do
         local keyCuedWindow = SimAppProUFCCuedOptionBase..windowPosition
         cuedWindows[keyCuedWindow] = ":"
       end
@@ -68,6 +67,15 @@ local buildSimAppProCuedWindowPayload = function(selectedWindowsTable)
     return stringPayloadForSimAppPro
 end
 
+local buildSimAppProComPayload = function(comString)
+    -- SimApp treats 10-20 sepcial. "`0" == 10
+    local comNumber = tonumber(comString)
+    local comResultString = comString
+    if type(comNumber) == "number" then
+        if comNumber >= 10 and comNumber < 20 then comResultString = "`"..(comNumber % 10) end
+    end
+    return comResultString
+end
 
 -- Populate the possible fields shown on a WW F18 UFC with custom values and return a comptiable payload for SimApp Pro
 -- SimApp Pro Payload = {
@@ -92,9 +100,11 @@ function ufcPatchUtils.buildSimAppProUFCPayload(simAppProUFCDataMap)
     local scratchDigits = buildSimAppProUFCCommand("UFC_ScratchPadNumberDisplay", cleanText(simAppProUFCDataMap.scratchPadNumbers))
     local scratchLeftString = buildSimAppProUFCCommand("UFC_ScratchPadString1Display", cleanText(simAppProUFCDataMap.scratchPadString1))
     local scrathRightString = buildSimAppProUFCCommand("UFC_ScratchPadString2Display", cleanText(simAppProUFCDataMap.scratchPadString2))
-    local com1 = buildSimAppProUFCCommand("UFC_Comm1Display", cleanText(simAppProUFCDataMap.com1))
-    local com2 = buildSimAppProUFCCommand("UFC_Comm2Display", cleanText(simAppProUFCDataMap.com2))
     local cuedWindowsPayload = buildSimAppProCuedWindowPayload(simAppProUFCDataMap.selectedWindows)
+    local com1StringValue = buildSimAppProComPayload(simAppProUFCDataMap.com1)
+    local com2StringValue = buildSimAppProComPayload(simAppProUFCDataMap.com2)
+    local com1 = buildSimAppProUFCCommand("UFC_Comm1Display", cleanText(com1StringValue))
+    local com2 = buildSimAppProUFCCommand("UFC_Comm2Display", cleanText(com2StringValue))
     return option1..option2..option3..option4..option5..com1..com2..scratchDigits..scratchLeftString..scrathRightString..cuedWindowsPayload
 end
 
