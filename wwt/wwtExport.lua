@@ -26,10 +26,8 @@ do
 		--启动网络
 		_winwing.net.start()
 
-		-- Include UFC Patch files and initalize
-		_winwing.ufcPatch=require("ufcPatch\\ufcPatch")
-		_winwing.ufcPatch.ufcPatchUtils=require("ufcPatch\\ufcPatchUtils")
-		_winwing.ufcPatch.initializeUFC()
+		-- Include UFC Patch files and initalize for universal UFC plugin
+		_winwing.ufcPatch=require("ufcPatch//ufcPatch")
 
 		--网络就绪
 		local _send={}
@@ -208,7 +206,9 @@ do
 
 
 				if _winwing.ufcPatch.useCustomUFC then
-					local ufcPayload  = _winwing.ufcPatch.getUFCPayloadByModuleType(_winwing.mod)
+
+					-- Generate the payload to send to SimApp Pro
+					local ufcPayload  = _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
 
 					-- Detect new custom UFC values, then send to SimApp Pro
 					if ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
@@ -220,7 +220,6 @@ do
 						-- Trick SimApp Pro into thinking we are using the F18 and F18 UFC
 						-- But we pass in the custom UFC values.
 						ufcCommon["args"]["FA-18C_hornet"] = ufcPayload
-						log.write("WWT", log.INFO, "Sending UFC Payload: "..ufcPayload)
 						_winwing.net.send(ufcCommon)
 					end
 				end
