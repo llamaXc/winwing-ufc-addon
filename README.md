@@ -25,7 +25,7 @@ This does not limit any Winwing product functionallity and it 100% compatible.
 	 - **Note**: SimApp Pro may overwrite `Scripts/wwt/wwtExport.lua`. If this happens, this add-on will need to be re-copied over. This may happen during a SimApp Pro update or clicking "Repair Lua" in SimApp Pro Settings. See Note on step 6 for a more permanent way to install.
  5. Make a copy of your `<USER>/Saved Games/<DCS>/Scripts/wwt` folder incase you ever want to undo these changes, I keep mine on my desktop just in case.
  6. Copy the `wwt` folder into `<USER>/Saved Games/<DCS>/Scripts/` and replace the existing `wwt` folder
-    - **Note: More permanent  install (until SimApp Pro has a version update)**: Do step 5, then replace `C:\Program Files (x86)\SimAppPro\resources\app.asar.unpacked\Events\wwt` with the `wwt` folder from step 3 (the one you also copied in step 5. This makes it so every time SimApp Pro starts up, it will not overwrite your add-on). **Requires re-installtion after SimApp Pro does an update.
+    - **Note: More permanent  install (until SimApp Pro has a version update)**: Do step 6, then replace `C:\Program Files (x86)\SimAppPro\resources\app.asar.unpacked\Events\wwt` with the `wwt` folder from step 3 (the one you also copied in step 6. This makes it so every time SimApp Pro starts up, it will not overwrite your add-on). **Requires re-installtion after SimApp Pro does an update.
 **
  7. Launch DCS
  8. Select a compatible module. 
