@@ -11,12 +11,17 @@ local ufcPatchHuey = require("ufcPatch\\aircraft\\ufcPatchHuey")
 local ufcPatchA10C2 = require("ufcPatch\\aircraft\\ufcPatchA10C2")
 local ufcPatchAV88 = require("ufcPatch\\aircraft\\ufcPatchAV88")
 local ufcPatchCustomModuleExample = require("ufcPatch\\aircraft\\ufcPatchCustomModuleExample")
+local ufcPatchUH60 = require("ufcPatch\\aircraft\\ufcPatchUH60")
+local ufcPatchMH60R = require("ufcPatch\\aircraft\\ufcPatchMH60R")
+local ufcPatchMI8 = require("ufcPatch\\aircraft\\ufcPatchMI8")
+local ufcPatchMI24 = require("ufcPatch\\aircraft\\ufcPatchMI24")
+
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
 -- There are various rates you can export UFC data at.
--- Time throttled: Exports every 0.2 seconds (UH-1H)
--- Static export: Exports a single time at mission start (A10-C2)
+-- Time throttled: Exports every 0.2 seconds (UH-1H, MI8, MI24, UH60, MH60)
+-- Static export: Exports a single time at mission start (A10-C2, CustomModuleExample)
 -- Normal export: Exports anytime new data is available (AV88)
 function ufcPatch.generateUFCExport(deltaTime, moduleName)
     ufcExportClock.tick(deltaTime)
@@ -41,6 +46,30 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
     elseif moduleName =="CustomModuleExample" then
         if ufcExportClock.canExportStaticData then
             return ufcPatchCustomModuleExample.generateUFCData()
+        end
+
+    --UH-60L sends throttled data every 0.2 seconds
+	elseif moduleName == "UH-60L" then
+        if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchUH60.generateUFCData()
+        end
+
+	--MH-60R sends throttled data every 0.2 seconds
+	elseif moduleName == "MH-60R" then
+        if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchMH60R.generateUFCData()
+        end
+
+	--Mi-8 sends throttled data every 0.2 seconds
+	elseif moduleName == "Mi-8MT" then
+        if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchMI8.generateUFCData()
+        end
+
+	--Mi-24 sends throttled data every 0.2 seconds
+	elseif moduleName == "Mi-24P" then
+        if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchMI24.generateUFCData()
         end
     end
 end
