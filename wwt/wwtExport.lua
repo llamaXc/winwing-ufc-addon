@@ -194,8 +194,8 @@ do
 							if _winwing.ufcPatch.useCustomUFC then
 								_sendOutput["args"]["0"] = {}
 								_sendOutput["args"]["0"]["109"] = 0.8
-								_sendOutput["args"][_dev][_key]=_valNew
 							end
+							_sendOutput["args"][_dev][_key]=_valNew
 						end
 					end
 				end
