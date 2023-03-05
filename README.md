@@ -16,9 +16,9 @@ This does not limit any Winwing product functionallity and it 100% compatible.
 
 # Installation
 #### This is easier than it seems, just added every step for all tech levels.
-**TLDR**: Replace the `Scripts/wwt` folder with the downloaded  <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.3/wwt.zip" download>Latest Release wwt<a/>.
+**TLDR**: Replace the `Scripts/wwt` folder with the downloaded  <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.4/wwt.zip" download>Latest Release wwt<a/>.
 
- 1. Download the <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.3/wwt.zip" download>Latest Release<a/>
+ 1. Download the <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.4/wwt.zip" download>Latest Release<a/>
  2. Unzip the .zip file using 7-zip or some other compression program.
  3. You will have a folder titled `wwt`.
  4. Ensure SimApp Pro is running
