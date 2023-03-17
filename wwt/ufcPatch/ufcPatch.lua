@@ -32,9 +32,15 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
             return ufcPatchHuey.generateUFCData()
         end
 
-    -- A-10C_2 sends static data once
+    -- A-10C_2 sends throttled data every 0.2 seconds
     elseif moduleName == "A-10C_2" then
-        if ufcExportClock.canExportStaticData then
+        if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchA10C2.generateUFCData()
+        end
+		
+    -- A-10C sends throttled data every 0.2 seconds
+    elseif moduleName == "A-10C" then
+        if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchA10C2.generateUFCData()
         end
 
