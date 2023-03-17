@@ -8,8 +8,8 @@ function ufcPatchA10C2.generateUFCData()
 
     --Example off setting the 5 option display windows to static values.
     return ufcUtils.buildSimAppProUFCPayload({
-        option1="FUNC",
-        option2="HACK",
+        option1="HACK",
+        option2="FUNC",
         option3="LTR",
         option4="MK",
         option5="ALT",
