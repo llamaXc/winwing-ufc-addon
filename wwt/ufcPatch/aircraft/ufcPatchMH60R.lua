@@ -181,8 +181,8 @@ function ufcPatchMH60R.generateUFCData()
     local UHFString = ""
     for index, value in ipairs(UHFdigits) do
         local UHFdigitToAppend = value
-        if value >= 225000 then
-            UHFdigitToAppend = 225000
+        if value >= 399975 then
+            UHFdigitToAppend = 399975
         end
         UHFString = UHFString .. UHFdigitToAppend
     end
