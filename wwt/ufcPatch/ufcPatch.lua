@@ -17,6 +17,8 @@ local ufcPatchMI8 = require("ufcPatch\\aircraft\\ufcPatchMI8")
 local ufcPatchMI24 = require("ufcPatch\\aircraft\\ufcPatchMI24")
 local ufcPatchKA50 = require("ufcPatch\\aircraft\\ufcPatchKA50")
 
+local ufcPatchTF51D = require("ufcPatch\\aircraft\\ufcPatchTF51D")
+
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
 -- There are various rates you can export UFC data at.
@@ -85,6 +87,11 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
         if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchMI24.generateUFCData()
         end
+    -- TF-51D sends throttled data every 0.2 seconds
+    	elseif moduleName == "TF-51D" then
+		if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchTF51D.generateUFCData()
+	end
     end
 end
 
