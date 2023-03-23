@@ -16,6 +16,8 @@ local ufcPatchMH60R = require("ufcPatch\\aircraft\\ufcPatchMH60R")
 local ufcPatchMI8 = require("ufcPatch\\aircraft\\ufcPatchMI8")
 local ufcPatchMI24 = require("ufcPatch\\aircraft\\ufcPatchMI24")
 local ufcPatchKA50 = require("ufcPatch\\aircraft\\ufcPatchKA50")
+local ufcPatchJF17 = require("ufcPatch\\aircraft\\ufcPatchJF17")
+local ufcPatchTF51D = require("ufcPatch\\aircraft\\ufcPatchTF51D")
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
@@ -32,9 +34,15 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
             return ufcPatchHuey.generateUFCData()
         end
 
-    -- A-10C_2 sends static data once
+    -- A-10C_2 sends throttled data every 0.2 seconds
     elseif moduleName == "A-10C_2" then
-        if ufcExportClock.canExportStaticData then
+        if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchA10C2.generateUFCData()
+        end
+		
+    -- A-10C sends throttled data every 0.2 seconds
+    elseif moduleName == "A-10C" then
+        if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchA10C2.generateUFCData()
         end
 
@@ -73,6 +81,18 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
         if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchMI8.generateUFCData()
         end
+
+    -- JF-17 sends throttled data every 0.2 seconds
+    elseif moduleName == "JF-17" then
+		if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchJF17.generateUFCData()
+        end
+
+    -- TF-51D sends throttled data every 0.2 seconds
+    elseif moduleName == "TF-51D" then
+            if ufcExportClock.canTransmitLatestPayload then
+                return ufcPatchTF51D.generateUFCData()
+            end
 
 	--Mi-24 sends throttled data every 0.2 seconds
 	elseif moduleName == "Mi-24P" then
