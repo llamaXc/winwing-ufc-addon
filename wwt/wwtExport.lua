@@ -157,9 +157,11 @@ do
 						--遍历数据并触发
 						for _dev,_devVal in pairs(_get["args"]) do
 							for _key,_val in pairs(_devVal) do
-								local dev=GetDevice(_dev)
-								if dev.performClickableAction~= nil then
-									dev:performClickableAction(_key,_val)
+								if _dev ~= nil then
+									local dev=GetDevice(_dev)
+									if dev ~= nil and dev.performClickableAction~= nil then
+										dev:performClickableAction(_key,_val)
+									end
 								end
 							end
 						end
