@@ -19,6 +19,8 @@ local ufcPatchKA50 = require("ufcPatch\\aircraft\\ufcPatchKA50")
 local ufcPatchJF17 = require("ufcPatch\\aircraft\\ufcPatchJF17")
 local ufcPatchTF51D = require("ufcPatch\\aircraft\\ufcPatchTF51D")
 local ufcPatchA4 = require("ufcPatch\\aircraft\\ufcPatchA4")
+local ufcPatchAH64 = require("ufcPatch\\aircraft\\ufcPatchAH64")
+local ufcPatchF16 = require("ufcPatch\\aircraft\\ufcPatchF16")
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
@@ -52,6 +54,14 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
         if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchA10C2.generateUFCData()
         end
+
+    -- AH-64D_BLK_II sends information when latest is available
+    elseif moduleName == 'AH-64D_BLK_II' then
+        return ufcPatchAH64.generateUFCData()
+
+    -- F-16C_50 sends information when latest is available
+    elseif moduleName == 'F-16C_50' then
+        return ufcPatchF16.generateUFCData()
 
     -- AV8BNA sends ODU information when latest is available
     elseif moduleName == 'AV8BNA' then
