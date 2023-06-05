@@ -14,6 +14,17 @@ This does not limit any Winwing product functionallity and it 100% compatible.
 
 </hr>
 
+# Supported Modules
+- AH-64: KU Keyboard, chaff/flare, radar altitude, [ Credit ANDR0ID + Wostg]
+- AV88 Harrier:  UFC + ODU
+- A4 [Credit Wostg]
+- F-16 [General data fields shown on UFC] [Credit Wostg]
+- KA-50 2+3: Altitude, waypoints, chaff, flare, gun count,. [Credit Wostg]
+- MI-24/MI-8/UH-60/UH-1H: Radio coms, radar altimeter, chaff/flare, arm state, etc [Credit ANDR0ID]
+- JF17: Mimic JF17 UFC displays [Credit ANDR0ID]
+- TF-51D: Radio selection, altitude, true heading [Credit ANDR0ID]
+- A10C2: Static text on the option displays. FUNC, HACK, LTR, MK, ALT
+
 # Installation
 #### This is easier than it seems, just added every step for all tech levels.
 **TLDR**: Replace the `Scripts/wwt` folder with the downloaded  <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.7/wwt.zip" download>Latest Release wwt<a/>.
