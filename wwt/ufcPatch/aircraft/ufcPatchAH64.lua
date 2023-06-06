@@ -62,7 +62,21 @@ local MasterCautInfo = MainPanel:get_argument_value(425) --AH-64 Master Arm Caut
             HeadingdigitToAppend = 0
         end
         HeadingString = tostring(value) 
-		if value < 10 then 
+		if value == -7 then --These strings needed as there is a "negative heading bug" with LoGet
+			HeadingString = "353M"
+		elseif value == -6 then 
+			HeadingString = "354M"
+		elseif value == -5 then 
+			HeadingString = "355M" 
+		elseif value == -4 then 
+			HeadingString = "356M"
+		elseif value == -3 then 
+			HeadingString = "357M"
+		elseif value == -2 then 
+			HeadingString = "358M"
+		elseif value == -1 then 
+			HeadingString = "359M"
+		elseif value < 10 then 
 			HeadingString = "00"..value.."M" 
 		elseif value >= 100 then 
 			HeadingString = ""..value.."M" 
@@ -119,7 +133,7 @@ local MasterCautInfo = MainPanel:get_argument_value(425) --AH-64 Master Arm Caut
         option1 = FC3RadarAltitudeString, --Radar Altitude --
         option2 = HeadingString, --Magnetic Heading 
         option3 = FuelString, --Fuel (Internal) in Gallons 
-        option4 = "T" .. string.format('%.0f', LoGetTrueAirSpeed()*1.943), --True Airspeed (Knots) --1.852
+        option4 = "T" .. string.format('%.0f', LoGetTrueAirSpeed()*1.943), --True Airspeed (Knots)
         option5 = StatusDisplay,
 		--"B" .. string.format('%.0f', math.floor((LoGetAltitudeAboveSeaLevel() * 3.281) / 10) * 10), --Barometric Altimeter 
         scratchPadNumbers = string.format('%.0f', math.floor(LoGetVerticalVelocity() * 196.85)) .. "  ", --Vertical Velocity (FPM)* 0.3048 * 10
