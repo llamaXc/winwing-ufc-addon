@@ -116,6 +116,21 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
         if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchMI24.generateUFCData()
         end
+    -- T-45 sends throttled data every 0.2 seconds
+    elseif moduleName == "T-45" then
+	if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchT45.generateUFCData()
+	end
+		
+     -- A-29B Mod sends latest data
+    elseif moduleName == "A-29B" then
+            return ufcPatchA29B.generateUFCData()
+
+      -- Hercules Mod sends throttled data every 0.2 seconds
+    elseif moduleName == "Hercules" then
+	if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchHerc.generateUFCData()
+	end	
     end
 end
 
