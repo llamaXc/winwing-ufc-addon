@@ -15,21 +15,24 @@ This does not limit any Winwing product functionallity and it 100% compatible.
 </hr>
 
 # Supported Modules
-- AH-64: KU Keyboard, chaff/flare, radar altitude, [ Credit ANDR0ID + Wostg]
+- AH-64: KU Keyboard, chaff/flare, radar altitude, [Credit @Wostg @ANDR0ID]
+- A29: Heading, fuel, aircraft mode, altitude [Credit @ANDR0ID @Wostg]
+- C130 Herc Mod: Heading, fuel, altitude, chaff/flare [Credit @ANDR0ID]
+- T45: Heading, fuel, altitude, radio freq, master arm, airspeed [Credit @ANDR0ID
 - AV88 Harrier:  UFC + ODU
-- A4 [Credit Wostg]
-- F-16 [General data fields shown on UFC] [Credit Wostg]
-- KA-50 2+3: Altitude, waypoints, chaff, flare, gun count,. [Credit Wostg]
-- MI-24/MI-8/UH-60/UH-1H: Radio coms, radar altimeter, chaff/flare, arm state, etc [Credit ANDR0ID]
-- JF17: Mimic JF17 UFC displays [Credit ANDR0ID]
-- TF-51D: Radio selection, altitude, true heading [Credit ANDR0ID]
-- A10C2: Static text on the option displays. FUNC, HACK, LTR, MK, ALT
+- A4 [Credit @Wostg]
+- F-16 [General data fields shown on UFC] [Credit @Wostg]
+- KA-50 2+3: Altitude, waypoints, chaff, flare, gun count,. [Credit @Wostg]
+- MI-24/MI-8/UH-60/UH-1H: Radio coms, radar altimeter, chaff/flare, arm state, etc [Credit @ANDR0ID]
+- JF17: Mimic JF17 UFC displays [Credit @ANDR0ID]
+- TF51D: Radio selection, altitude, true heading [Credit @ANDR0ID]
+- A10C2: Static text on the option displays. FUNC, HACK, LTR, MK, ALT, displays master caution light status
 
 # Installation
 #### This is easier than it seems, just added every step for all tech levels.
-**TLDR**: Replace the `Scripts/wwt` folder with the downloaded  <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.7/wwt.zip" download>Latest Release wwt<a/>.
+**TLDR**: Replace the `Scripts/wwt` folder with the downloaded  <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.8/wwt.zip" download>Latest Release wwt<a/>.
 
- 1. Download the <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.7/wwt.zip" download>Latest Release<a/>
+ 1. Download the <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.8/wwt.zip" download>Latest Release<a/>
  2. Unzip the .zip file using 7-zip or some other compression program.
  3. You will have a folder titled `wwt`.
  4. Ensure SimApp Pro is running
