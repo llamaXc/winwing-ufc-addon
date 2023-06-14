@@ -2,20 +2,14 @@ local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
 
 ufcPatchF16 = {}
 
-ufcPatchF16.startTime = os.time()
-
 function ufcPatchF16.generateUFCData()
-    if os.time() - ufcPatchF16.startTime < 15 then
-        return
-    end
-
     local MainPanel = GetDevice(0)
     local HUD = ufcUtils.getDCSListIndication(1)
     local expendableReadout = ufcUtils.getDCSListIndication(16)
 
     -- Altimeter AAU-34/A
-    local HUD_Altitude_num_k = HUD.HUD_Altitude_num_k or 0
-    local HUD_Altitude_num = HUD.HUD_Altitude_num or 0
+    local HUD_Altitude_num_k = HUD and HUD.HUD_Altitude_num_k or 0
+    local HUD_Altitude_num = HUD and HUD.HUD_Altitude_num or 0
     local HUD_BARO = (HUD_Altitude_num_k * 1000) + HUD_Altitude_num
 
     local Altimeter_100_footCount = GetDevice(0):get_argument_value(54)
@@ -40,8 +34,8 @@ function ufcPatchF16.generateUFCData()
     end
 
     -- Velocity Mnemonic and Numerics
-    local HUD_Window2_VelScaleMnemonic = HUD.HUD_Window2_VelScaleMnemonic or "V"
-    local HUD_Velocity_num = HUD.HUD_Velocity_num or 0
+    local HUD_Window2_VelScaleMnemonic = HUD and HUD.HUD_Window2_VelScaleMnemonic or "V"
+    local HUD_Velocity_num = HUD and HUD.HUD_Velocity_num or 0
     local TAS = LoGetTrueAirSpeed()
 
     local Velocity = HUD_Window2_VelScaleMnemonic .. string.format('%03d', HUD_Velocity_num)
@@ -77,17 +71,17 @@ function ufcPatchF16.generateUFCData()
     end
 
     return ufcUtils.buildSimAppProUFCPayload({
-        option1=Velocity,
-        option2=BARO_ALT,
-        option3="H" .. string.format('%.0f', ((LoGetMagneticYaw() * 180 / math.pi) + 360) % 360),
-        option4="V" .. string.format('%.0f', LoGetVerticalVelocity() * 0.3048 * 10),
-        option5="F" .. string.format('%03d', fuelPercentage),
-        scratchPadNumbers=HUD.HUD_Window14_StpTgtData_RangeNum,
-        scratchPadString1="S",
-        scratchPadString2="P",
-        com1=CHAFF,
-        com2=FLARES,
-        selectedWindows={}
+        option1 = Velocity,
+        option2 = BARO_ALT,
+        option3 = "H" .. string.format('%.0f', ((LoGetMagneticYaw() * 180 / math.pi) + 360) % 360),
+        option4 = "V" .. string.format('%.0f', LoGetVerticalVelocity() * 0.3048 * 10),
+        option5 = "F" .. string.format('%03d', fuelPercentage),
+        scratchPadNumbers = HUD and HUD.HUD_Window14_StpTgtData_RangeNum or "",
+        scratchPadString1 = "S",
+        scratchPadString2 = "P",
+        com1 = CHAFF,
+        com2 = FLARES,
+        selectedWindows = {}
     })
 end
 
