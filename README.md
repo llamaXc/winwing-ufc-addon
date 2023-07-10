@@ -22,6 +22,7 @@ This does not limit any Winwing product functionallity and it 100% compatible.
 - T45: Heading, fuel, altitude, radio freq, master arm, airspeed [Credit @ANDR0ID
 - AV88 Harrier:  UFC + ODU
 - A4 [Credit @Wostg]
+- F-15E
 - F-16 [General data fields shown on UFC] [Credit @Wostg]
 - KA-50 2+3: Altitude, waypoints, chaff, flare, gun count,. [Credit @Wostg]
 - MI-24/MI-8/UH-60/UH-1H: Radio coms, radar altimeter, chaff/flare, arm state, etc [Credit @ANDR0ID]
