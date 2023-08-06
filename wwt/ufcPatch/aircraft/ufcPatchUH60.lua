@@ -319,4 +319,4 @@ function ufcPatchUH60.generateUFCData()
 	})
 end
 
-return ufcPatchUH60 --v1.0 by ANDR0ID
+return ufcPatchUH60 --v2.1 by ANDR0ID
