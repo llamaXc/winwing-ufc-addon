@@ -23,6 +23,10 @@ function ufcPatchUH60.generateUFCData()
 		VHFFreq = VHFRadio:get_frequency()
 		FM2Freq = FMRadio2:get_frequency()
 		HFFreq = HFRadio:get_frequency()
+		
+		ARC201FM1Freq = get_param_handle("ARC201FM1param"):get()
+		ARC201FM2Freq = get_param_handle("ARC201FM2param"):get()
+		ARC186Freq = get_param_handle("ARC186param"):get()
 
 		FuelInfo = get_param_handle("CDU_FUEL_DIGITS"):get()
 		AuxFuelInfoLO = get_param_handle("AFMS_DISPLAY_OUTBD_L"):get()
@@ -162,7 +166,7 @@ function ufcPatchUH60.generateUFCData()
 
 	--Radios
 	--AN/ARC 201 FM1
-	local FM1digits = { math.floor(FM1Freq / 1000) }
+	local FM1digits = { math.floor(ARC201FM1Freq / 1000) }
 
 	local FM1String = ""
 	for index, value in ipairs(FM1digits) do
@@ -186,7 +190,7 @@ function ufcPatchUH60.generateUFCData()
 	end
 
 	--AN/ARC 186 VHF
-	local VHFdigits = { math.floor(VHFFreq / 1000) }
+	local VHFdigits = { math.floor(ARC186Freq / 1000) }
 
 	local VHFString = ""
 	for index, value in ipairs(VHFdigits) do
@@ -198,7 +202,7 @@ function ufcPatchUH60.generateUFCData()
 	end
 
 	--AN/ARC 201 FM2
-	local FM2digits = { math.floor(FM2Freq / 1000) }
+	local FM2digits = { math.floor(ARC201FM2Freq / 1000) }
 
 	local FM2String = ""
 	for index, value in ipairs(FM2digits) do
@@ -315,4 +319,4 @@ function ufcPatchUH60.generateUFCData()
 	})
 end
 
-return ufcPatchUH60 --v1.0 by ANDR0ID
+return ufcPatchUH60 --v2.1 by ANDR0ID

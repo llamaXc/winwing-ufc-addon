@@ -24,6 +24,10 @@ function ufcPatchMH60R.generateUFCData()
         FM2Freq = FMRadio2:get_frequency()
         HFFreq = HFRadio:get_frequency()
 
+		ARC201FM1Freq = get_param_handle("ARC201FM1param"):get()
+		ARC201FM2Freq = get_param_handle("ARC201FM2param"):get()
+		ARC186Freq = get_param_handle("ARC186param"):get()
+
         FuelInfo = get_param_handle("CDU_FUEL_DIGITS"):get()
         AuxFuelInfoLO = get_param_handle("AFMS_DISPLAY_OUTBD_L"):get()
         AuxFuelInfoLI = get_param_handle("AFMS_DISPLAY_INBD_L"):get()
@@ -162,66 +166,67 @@ function ufcPatchMH60R.generateUFCData()
         AuxFuelString = AuxFuelInfoLO
     end
 
-    --Radios
-    --AN/ARC 201 FM1
-    local FM1digits = { math.floor(FM1Freq / 1000) }
+ 
+	--Radios
+	--AN/ARC 201 FM1
+	local FM1digits = { math.floor(ARC201FM1Freq / 1000) }
 
-    local FM1String = ""
-    for index, value in ipairs(FM1digits) do
-        local FM1digitToAppend = value
-        if value >= 88000 then
-            FM1digitToAppend = 88000
-        end
-        FM1String = FM1String .. FM1digitToAppend
-    end
+	local FM1String = ""
+	for index, value in ipairs(FM1digits) do
+		local FM1digitToAppend = value
+		if value >= 88000 then
+			FM1digitToAppend = 88000
+		end
+		FM1String = FM1String .. FM1digitToAppend
+	end
 
-    --AN/ARC 164 UHF
-    local UHFdigits = { math.floor(UHFFreq / 1000) }
+	--AN/ARC 164 UHF
+	local UHFdigits = { math.floor(UHFFreq / 1000) }
 
-    local UHFString = ""
-    for index, value in ipairs(UHFdigits) do
-        local UHFdigitToAppend = value
-        if value >= 399975 then
-            UHFdigitToAppend = 399975
-        end
-        UHFString = UHFString .. UHFdigitToAppend
-    end
+	local UHFString = ""
+	for index, value in ipairs(UHFdigits) do
+		local UHFdigitToAppend = value
+		if value >= 399975 then
+			UHFdigitToAppend = 399975
+		end
+		UHFString = UHFString .. UHFdigitToAppend
+	end
 
-    --AN/ARC 186 VHF
-    local VHFdigits = { math.floor(VHFFreq / 1000) }
+	--AN/ARC 186 VHF
+	local VHFdigits = { math.floor(ARC186Freq / 1000) }
 
-    local VHFString = ""
-    for index, value in ipairs(VHFdigits) do
-        local VHFdigitToAppend = value
-        if value >= 152000 then
-            VHFdigitToAppend = 152000
-        end
-        VHFString = VHFString .. VHFdigitToAppend
-    end
+	local VHFString = ""
+	for index, value in ipairs(VHFdigits) do
+		local VHFdigitToAppend = value
+		if value >= 152000 then
+			VHFdigitToAppend = 152000
+		end
+		VHFString = VHFString .. VHFdigitToAppend
+	end
 
-    --AN/ARC 201 FM2
-    local FM2digits = { math.floor(FM2Freq / 1000) }
+	--AN/ARC 201 FM2
+	local FM2digits = { math.floor(ARC201FM2Freq / 1000) }
 
-    local FM2String = ""
-    for index, value in ipairs(FM2digits) do
-        local FM2digitToAppend = value
-        if value >= 88000 then
-            FM2digitToAppend = 88000
-        end
-        FM2String = FM2String .. FM2digitToAppend
-    end
+	local FM2String = ""
+	for index, value in ipairs(FM2digits) do
+		local FM2digitToAppend = value
+		if value >= 88000 then
+			FM2digitToAppend = 88000
+		end
+		FM2String = FM2String .. FM2digitToAppend
+	end
 
-    --AN/ARC 220 HF
-    local HFdigits = { math.floor(HFFreq / 1000) }
+	--AN/ARC 220 HF
+	local HFdigits = { math.floor(HFFreq / 1000) }
 
-    local HFString = ""
-    for index, value in ipairs(HFdigits) do
-        local HFdigitToAppend = value
-        if value >= 30000 then
-            HFdigitToAppend = 30000
-        end
-        HFString = HFString .. HFdigitToAppend
-    end
+	local HFString = ""
+	for index, value in ipairs(HFdigits) do
+		local HFdigitToAppend = value
+		if value >= 30000 then
+			HFdigitToAppend = 30000
+		end
+		HFString = HFString .. HFdigitToAppend
+	end
 
     --Pilot ICP
     local ICPdigits = { math.floor(MainPanel:get_argument_value(400) * 5) }
