@@ -1,9 +1,8 @@
 # Winwing Universal UFC Addon
 
 ### **Contact Information**
-- Email: preston.meade1@gmail.com
-- Discord: jerold#7539
-- DCS Forums: prestonflying
+- Email: papiplanesfly@gmail.com
+- Discord: papiplanes
 
 ### About this project
 Hi! This is my attempt at getting the **Winwing F18 UFC** to work with other DCS Modules. The goal was to create a simple, easily expandable way of sending DCS module information to the **Winwing F18 UFC**.  The result is an updated Winwing lua folder that just needs to be copied into your Saved Games/DCS/Scripts folder. **See instructions below!** 
