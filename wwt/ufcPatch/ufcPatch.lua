@@ -23,6 +23,7 @@ local ufcPatchAH64 = require("ufcPatch\\aircraft\\ufcPatchAH64")
 local ufcPatchF16 = require("ufcPatch\\aircraft\\ufcPatchF16")
 local ufcPatchF15e = require("ufcPatch\\aircraft\\ufcPatchF15e")
 local ufcPatchGeneral = require("ufcPatch\\aircraft\\ufcPatchGeneral")
+local ufcPatchT45 = require("ufcPatch\\aircraft\\ufcPatchT45")
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
