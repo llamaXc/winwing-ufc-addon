@@ -1,3 +1,6 @@
+
+# Get the latest version -> Click "Releases" -> Download the latest
+
 # Winwing Universal UFC Addon
 
 ### About this project
