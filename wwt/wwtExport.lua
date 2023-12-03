@@ -174,6 +174,7 @@ do
 				local _sendOutput={}
 				_sendOutput["func"]="addOutput"
 				_sendOutput["timestamp"]=t
+
 				for _dev,_devVal in pairs(_winwing.output) do
 					if type(GetDevice(_dev))~='table' then
 						break
@@ -189,15 +190,15 @@ do
 							if type(_sendOutput["args"][_dev])~='table' then
 								_sendOutput["args"][_dev]={}
 							end
-							_sendOutput["args"][_dev][_key]=_valNew
 
 							-- Force update LCD brightness to 80% for UFC
 							-- Required since SimApp Pro expects datum id 109 to be the UFC brightness
-							if _winwing.ufcPatch.useCustomUFC then
+							if _winwing.ufcPatch.useCustomUFC and _key == "109" then
 								_sendOutput["args"]["0"] = {}
-								_sendOutput["args"]["0"]["109"] = 0.8
+								_sendOutput["args"]["0"]["109"] = 0.9
+							else
+								_sendOutput["args"][_dev][_key]=_valNew
 							end
-							_sendOutput["args"][_dev][_key]=_valNew
 						end
 					end
 				end
