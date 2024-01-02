@@ -63,6 +63,8 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
         return ufcPatchAH64.generateUFCData()
 
     -- F-16C_50 sends information when latest is available
+    -- WARNING: The F-16C ufc patch addon will no longer work. This is due to SimApp Pro and the new F16 ICP causing issues.
+    -- For now, this will be disabled
     elseif moduleName == 'F-16C_50' then
         return ufcPatchF16.generateUFCData()
 

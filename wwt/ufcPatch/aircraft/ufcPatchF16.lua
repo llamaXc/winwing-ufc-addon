@@ -1,5 +1,5 @@
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
-
+-- The F16 will not work by default due to WinWing news F16 ICP. This ufcPatch file will no longer be used.
 ufcPatchF16 = {}
 
 function ufcPatchF16.generateUFCData()

@@ -71,9 +71,10 @@ do
 
 						-- Required to trick SimApp Pro into allowing UFC/Com/Scratch pad commands
 						local isF18 = _self.Name == 'FA-18C_hornet'
-						if isF18 == false then
+						local isF16 = _self.Name == 'F-16C_50'
+						-- To prevent Breaking the ICP, this mod will be disabled when flying the F18 or the F16
+						if isF18 == false and isF16 == false then
 							_winwing.ufcPatch.useCustomUFC = true
-							_send["msg"]="FA-18C_hornet"
 						end
 
 						_winwing.net.send(_send)
