@@ -65,6 +65,11 @@ do
 						--记录机型
 						log.write("WWT",log.INFO,_self.Name)
 						_winwing.mod=_self.Name
+						
+						-- To support the Super Bug, override module name to be FA-18C Hornet
+						if _self.Name == "FA-18E" then _self.Name = "FA-18C_hornet" end
+						if _self.Name == "FA-18F" then _self.Name = "FA-18C_hornet" end
+
 						local _send={}
 						_send["func"]="mod"
 						_send["msg"]=_self.Name
