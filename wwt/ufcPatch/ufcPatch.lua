@@ -24,6 +24,9 @@ local ufcPatchF16 = require("ufcPatch\\aircraft\\ufcPatchF16")
 local ufcPatchF15e = require("ufcPatch\\aircraft\\ufcPatchF15e")
 local ufcPatchGeneral = require("ufcPatch\\aircraft\\ufcPatchGeneral")
 local ufcPatchT45 = require("ufcPatch\\aircraft\\ufcPatchT45")
+local ufcPatchOV10 = require("ufcPatch\\aircraft\\ufcPatchOV10")
+local ufcPatchAH6J = require("ufcPatch\\aircraft\\ufcPatchAH6J")
+local ufcPatchSK60 = require("ufcPatch\\aircraft\\ufcPatchSK60")
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
@@ -140,6 +143,25 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
 	if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchHerc.generateUFCData()
 	end
+	
+	 -- OV-10A Bronco Mod sends throttled data every 0.2 seconds
+    elseif moduleName == "Bronco-OV-10A" then
+		if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchOV10.generateUFCData()
+		end	
+		
+		 -- AH-6Mod sends throttled data every 0.2 seconds
+    elseif moduleName == "AH-6" then
+		if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchAH6J.generateUFCData()
+		end	
+		
+		 -- SK-60 mod sends throttled data every 0.2 seconds
+    elseif moduleName == "SK-60" then
+		if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchSK60.generateUFCData()
+		end	
+	
      --General Profile sends throttled data (THIS MUST ALWAYS BE LAST IN THE LIST)
      elseif moduleName ~= "FA-18C_hornet" then 
 	if ufcExportClock.canTransmitLatestPayload then

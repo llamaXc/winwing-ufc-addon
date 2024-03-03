@@ -323,9 +323,28 @@ function ufcPatchUtils.VerticalV_FPM()
     for index, value in ipairs(VerticalSpeed) do
         local VerticalFPMtoAppend = value
         if value >= 9999 then
-            AirspeeddigitToAppend = 9999
+            VerticalFPMtoAppend  = 9999
+		elseif value <= -9999 then 
+			VerticalFPMtoAppend = -9999
         end
-        VerticalFPM = VerticalFPM..VerticalFPMtoAppend
+        VerticalFPM = tostring(value)
+		if value <= -1000 then 
+		VerticalFPM = "-"..math.abs(value)
+		elseif (value > -1000 and value <= -100) then 
+		VerticalFPM = "-0"..math.abs(value)
+		elseif (value > -100 and value <= -10) then 
+		VerticalFPM = "-00"..math.abs(value)
+		elseif value < 0 then 
+		VerticalFPM = "-000"..math.abs(value)
+		elseif value < 10 then 
+		VerticalFPM = "000"..value
+		elseif value >= 1000 then 
+		VerticalFPM = ""..value
+		elseif (value >= 100 and value <= 999) then 
+		VerticalFPM = "0"..value
+		elseif (value >= 10 and value <= 99) then
+		VerticalFPM = "00"..value
+		end 
     end
 	return VerticalFPM
 end
@@ -337,9 +356,28 @@ function ufcPatchUtils.VerticalV_MPS()
     for index, value in ipairs(AirspeeddigitsMPS) do
         local VerticalMPStoAppend = value
         if value >= 9999 then
-            AirspeeddigitToAppend = 9999
+            VerticalMPStoAppend = 9999
+		elseif value <= -9999 then 
+			VerticalMPStoAppend = -9999
         end
-        VerticalMPS = VerticalMPS..VerticalMPStoAppend
+        VerticalMPS = tostring(value)
+		if value <= -1000 then 
+		VerticalMPS = "-"..math.abs(value)
+		elseif (value > -1000 and value <= -100) then 
+		VerticalMPS = "-0"..math.abs(value)
+		elseif (value > -100 and value <= -10) then 
+		VerticalMPS = "-00"..math.abs(value)
+		elseif value < 0 then 
+		VerticalMPS = "-000"..math.abs(value)
+		elseif value < 10 then 
+		VerticalMPS = "000"..value
+		elseif value >= 1000 then 
+		VerticalMPS = ""..value
+		elseif (value >= 100 and value <= 999) then 
+		VerticalMPS = "0"..value
+		elseif (value >= 10 and value <= 99) then
+		VerticalMPS = "00"..value
+		end 
     end
 	return VerticalMPS
 end
@@ -372,6 +410,6 @@ function ufcPatchUtils.chaff()
 	end
 	return ChaffString
 end 
---End ANDR0ID Added
+--End ANDR0ID Added --Updated 01MAR24
 
 return ufcPatchUtils
