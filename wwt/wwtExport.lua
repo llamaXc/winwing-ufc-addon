@@ -89,7 +89,7 @@ do
 				--接受网络数据并处理
 				local _get=_winwing.net.get()
 				if type(_get)=="table" and _winwing.mod~=nil then
-					if _get["func"]=="addOutput" then--添加输出（变化输出）
+					if _winwing.ufcPatch.overrideLights == false and _get["func"]=="addOutput" then--添加输出（变化输出）
 						--遍历数据并添加
 						for _dev,_devVal in pairs(_get["args"]) do
 							for _key,_valOld in pairs(_devVal) do
@@ -219,6 +219,7 @@ do
 
 					-- Generate the payload to send to SimApp Pro
 					local ufcPayload  = _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
+					local lightPayload = _winwing.ufcPatch.generateLightExport(_winwing.interval, _winwing.mod)
 
 					-- Detect new custom UFC values, then send to SimApp Pro
 					if ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
@@ -231,6 +232,15 @@ do
 						-- But we pass in the custom UFC values.
 						ufcCommon["args"]["FA-18C_hornet"] = ufcPayload
 						_winwing.net.send(ufcCommon)
+					end
+
+					if _winwing.ufcPatch.overrideLights and lightPayload ~= nil and lightPayload ~= _winwing.ufcPatch.prevLightPayload then
+						_winwing.ufcPatch.prevLightPayload = lightPayload
+						local lightOutputMessage={}
+						lightOutputMessage["func"]="addOutput"
+						lightOutputMessage["args"]= {}
+						lightOutputMessage["args"]["0"] = lightPayload
+						_winwing.net.send(lightOutputMessage)
 					end
 				end
 
