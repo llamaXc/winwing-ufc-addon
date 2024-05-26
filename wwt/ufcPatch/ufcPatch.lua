@@ -1,10 +1,13 @@
 ufcPatch={}
 
 ufcPatch.prevUFCPayload = nil
+ufcPatch.prevLightPayload = nil
 ufcPatch.useCustomUFC = false
+ufcPatch.overrideLights = true
 
 -- Clock module
 local ufcExportClock = require("ufcPatch\\utilities\\ufcPatchClock")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 -- Import supported modules
 local ufcPatchHuey = require("ufcPatch\\aircraft\\ufcPatchHuey")
@@ -24,6 +27,17 @@ local ufcPatchF16 = require("ufcPatch\\aircraft\\ufcPatchF16")
 local ufcPatchF15e = require("ufcPatch\\aircraft\\ufcPatchF15e")
 local ufcPatchGeneral = require("ufcPatch\\aircraft\\ufcPatchGeneral")
 local ufcPatchT45 = require("ufcPatch\\aircraft\\ufcPatchT45")
+
+function ufcPatch.generateLightExport(deltaTime, moduleName)
+
+    if moduleName == "UH-1H" then
+        return ufcPatchHuey.generateLightData()
+    end
+
+    -- TODO add more light profiles for each aircraft 
+    
+
+end
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.

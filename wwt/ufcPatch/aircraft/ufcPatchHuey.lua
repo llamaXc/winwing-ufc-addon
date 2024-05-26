@@ -1,8 +1,24 @@
 -- Credit to ANDR0ID on DCS Forums
 
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchHuey = {}
+
+function ufcPatchHuey.generateLightData()
+
+	-- Just like in generateUFCData(), you can conditionally change the light values based on export values from DCS :)
+	local landingGearLight = 1
+	local aaLight = 1
+	local agLight = 0
+
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLight,
+		[lightsHelper.AA] = aaLight,
+		[lightsHelper.AG] = agLight
+	}
+end
+
 
 function ufcPatchHuey.generateUFCData()
 	-- Access the UH1 Main panel from DCS
