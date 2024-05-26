@@ -85,11 +85,11 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
     elseif moduleName == 'Ka-50' then
         return ufcPatchKA50.generateUFCData()
 
-	elseif moduleName == "F-4E-45MC" then
+    elseif moduleName == "F-4E-45MC" then
         if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchPHANTOM.generateUFCData()
         end
-		
+        
     -- CustomModuleExample sends static data once
     elseif moduleName =="CustomModuleExample" then
         if ufcExportClock.canExportStaticData then
