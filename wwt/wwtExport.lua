@@ -104,6 +104,9 @@ do
 						local _send={}
 						_send["func"]=_get["func"]
 						for _dev,_devVal in pairs(_get["args"]) do
+							if _dev == nil or GetDevice(_dev) == nil or type(GetDevice(_dev))~='table' then
+								break
+							end
 							GetDevice(_dev):update_arguments()
 							for _key,_valOld in pairs(_devVal) do
 								local _valNew=GetDevice(_dev):get_argument_value(_key)
@@ -183,7 +186,7 @@ do
 				_sendOutput["timestamp"]=t
 
 				for _dev,_devVal in pairs(_winwing.output) do
-					if type(GetDevice(_dev))~='table' then
+					if _dev == nil or GetDevice(_dev) == nil or type(GetDevice(_dev))~='table' then
 						break
 					end
 					GetDevice(_dev):update_arguments()
