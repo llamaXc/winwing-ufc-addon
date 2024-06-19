@@ -317,7 +317,7 @@ end
 	--Vertical Velocity 
 --Feet per Min 
 function ufcPatchUtils.VerticalV_FPM()
-	local VerticalSpeed = {math.floor(LoGetVerticalVelocity()*196.85)}  --Feet per Min
+	local VerticalSpeed = {math.floor((LoGetVerticalVelocity()*196.85))}  --Feet per Min 
 
     local VerticalFPM = ""
     for index, value in ipairs(VerticalSpeed) do
@@ -348,6 +348,41 @@ function ufcPatchUtils.VerticalV_FPM()
     end
 	return VerticalFPM
 end
+
+--Feet per Min (3 Digit negative) 
+function ufcPatchUtils.VerticalV_FPMv2()
+	local VerticalSpeed = {math.floor((LoGetVerticalVelocity()*196.85))}  --Feet per Min 
+
+    local VerticalFPM = ""
+    for index, value in ipairs(VerticalSpeed) do
+        local VerticalFPMtoAppend = value
+        if value >= 9999 then
+            VerticalFPMtoAppend  = 9999
+		elseif value <= -999 then 
+			VerticalFPMtoAppend = -999
+        end
+        VerticalFPM = tostring(value)
+		if value < -999 then 
+		VerticalFPM = "-999"
+		elseif (value >= -999 and value <= -100) then 
+		VerticalFPM = "-"..math.abs(value)
+		elseif (value > -100 and value <= -10) then 
+		VerticalFPM = "-0"..math.abs(value)
+		elseif value < 0 then 
+		VerticalFPM = "-00"..math.abs(value)
+		elseif value < 10 then 
+		VerticalFPM = "000"..value
+		elseif value >= 1000 then 
+		VerticalFPM = ""..value
+		elseif (value >= 100 and value <= 999) then 
+		VerticalFPM = "0"..value
+		elseif (value >= 10 and value <= 99) then
+		VerticalFPM = "00"..value
+		end 
+    end
+	return VerticalFPM
+end
+
 --Meters per Second
 function ufcPatchUtils.VerticalV_MPS()
 	local AirspeeddigitsMPS = {math.floor(LoGetVerticalVelocity())}  --Meters per Second
