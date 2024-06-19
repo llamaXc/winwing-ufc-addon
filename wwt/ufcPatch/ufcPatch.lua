@@ -22,13 +22,14 @@ local ufcPatchA4 = require("ufcPatch\\aircraft\\ufcPatchA4")
 local ufcPatchAH64 = require("ufcPatch\\aircraft\\ufcPatchAH64")
 local ufcPatchF16 = require("ufcPatch\\aircraft\\ufcPatchF16")
 local ufcPatchF15e = require("ufcPatch\\aircraft\\ufcPatchF15e")
-local ufcPatchGeneral = require("ufcPatch\\aircraft\\ufcPatchGeneral")
+local ufcPatchPHANTOM = require("ufcPatch\\aircraft\\ufcPatchPHANTOM")
 local ufcPatchT45 = require("ufcPatch\\aircraft\\ufcPatchT45")
 local ufcPatchOV10 = require("ufcPatch\\aircraft\\ufcPatchOV10")
 local ufcPatchAH6J = require("ufcPatch\\aircraft\\ufcPatchAH6J")
 local ufcPatchSK60 = require("ufcPatch\\aircraft\\ufcPatchSK60")
 local ufcPatchOH58D = require("ufcPatch\\aircraft\\ufcPatchOH58D")
-
+local ufcPatchGeneral = require("ufcPatch\\aircraft\\ufcPatchGeneral")
+-------------------------------------
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
@@ -89,6 +90,11 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
     elseif moduleName == 'Ka-50' then
         return ufcPatchKA50.generateUFCData()
 
+    elseif moduleName == "F-4E-45MC" then
+        if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchPHANTOM.generateUFCData()
+        end
+        
     -- CustomModuleExample sends static data once
     elseif moduleName =="CustomModuleExample" then
         if ufcExportClock.canExportStaticData then
