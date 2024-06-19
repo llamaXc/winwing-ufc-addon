@@ -27,6 +27,8 @@ local ufcPatchT45 = require("ufcPatch\\aircraft\\ufcPatchT45")
 local ufcPatchOV10 = require("ufcPatch\\aircraft\\ufcPatchOV10")
 local ufcPatchAH6J = require("ufcPatch\\aircraft\\ufcPatchAH6J")
 local ufcPatchSK60 = require("ufcPatch\\aircraft\\ufcPatchSK60")
+local ufcPatchOH58D = require("ufcPatch\\aircraft\\ufcPatchOH58D")
+
 
 -- Add new module names here, then create a supporting lua file for the aircraft
 -- See aircraft/ufcPatchCustomModuleExample.lua for an example.
@@ -161,6 +163,12 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
 		if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchSK60.generateUFCData()
 		end	
+		
+		 --OH-58D sends throttled data every 0.2 seconds
+    elseif moduleName == "OH58D" then
+		if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchOH58D.generateUFCData()
+		end
 	
      --General Profile sends throttled data (THIS MUST ALWAYS BE LAST IN THE LIST)
      elseif moduleName ~= "FA-18C_hornet" then 
