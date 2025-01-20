@@ -445,6 +445,15 @@ function ufcPatchUtils.chaff()
 	end
 	return ChaffString
 end 
---End ANDR0ID Added --Updated 01MAR24
+
+function ufcPatchUtils.SwtichPosition(_swticharg, _multiplier)
+    local _switchposition = GetDevice(0):get_argument_value(_swticharg)
+    local _switchvalue = math.abs(tonumber(string.format("%.0f", (_switchposition) * (_multiplier))))
+
+    return _switchvalue
+
+end
+
+--End ANDR0ID Added --Updated 20JAN25
 
 return ufcPatchUtils
