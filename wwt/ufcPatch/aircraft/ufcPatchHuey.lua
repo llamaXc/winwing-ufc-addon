@@ -1,8 +1,39 @@
 -- Credit to ANDR0ID on DCS Forums
-
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchHuey = {}
+
+-- To add this ability to another module, add this function into the class 
+-- and implement the lights to be powered by DCS module update_arguments
+function ufcPatchHuey.generateLightData()
+	local MainPanel = GetDevice(0)
+
+	local masterArmLight = MainPanel:get_argument_value(254)
+	local agLightState = masterArmLight
+
+	local starterGenSwitch = MainPanel:get_argument_value(220)
+	local apuLightState = starterGenSwitch
+
+	local heightAboveGround = LoGetAltitudeAboveGroundLevel()
+	local landingGearLightState = 0
+	if heightAboveGround <= 1.7 then
+		landingGearLightState = 1
+	end
+
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = 0,
+		[lightsHelper.AG] = agLightState,
+		[lightsHelper.APU_READY] = apuLightState,
+		[lightsHelper.JETTISON_CTR] = 0,
+		[lightsHelper.JETTISON_LI] = 0,
+		[lightsHelper.JETTISON_LO] = 0,
+		[lightsHelper.JETTISON_RI] = 0,
+		[lightsHelper.JETTISON_RO] = 0,
+	}
+end
+
 
 function ufcPatchHuey.generateUFCData()
 	-- Access the UH1 Main panel from DCS
@@ -212,12 +243,15 @@ function ufcPatchHuey.generateUFCData()
 		WepsDisplay = "7-62"
 	end
 
+
+	local torqueValue = math.floor(MainPanel:get_argument_value(124) * 100) .. "%"
+
 	return ufcUtils.buildSimAppProUFCPayload({
 		scratchPadNumbers = RadioDisplay, --Freq of Slectected Radio
 		option1 = radarAltitudeString, --Altitiude
 		option2 = HeadingString, --Heading
 		option3 = FuelString, --Total Fuel (Internal)
-		option4 = "UH1H",
+		option4 = torqueValue, -- Torque PSI (0-100) as Percent
 		option5 = WepsDisplay, --UH-1 Weapon Selector
 		com1 = flarecount, --Flare Count
 		com2 = chaffcount, --Chaff Count

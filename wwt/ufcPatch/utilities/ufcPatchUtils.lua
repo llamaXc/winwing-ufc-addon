@@ -456,4 +456,21 @@ end
 
 --End ANDR0ID Added --Updated 20JAN25
 
+-- Given a dictonary it will return a string representation
+function ufcPatchUtils.tableToString(tbl, indent)
+	indent = indent or 2
+	local result = ""
+	local formatting = string.rep("  ", indent)
+	for key, value in pairs(tbl) do
+		if type(value) == "table" then
+			result = result .. formatting .. tostring(key) .. ":\n"
+			result = result .. ufcPatch.tableToString(value, indent + 1)  -- Recursive call for nested tables
+		else
+			result = result .. formatting .. tostring(key) .. " = " .. tostring(value) .. "\n"
+		end
+	end
+	return result
+end
+
+
 return ufcPatchUtils

@@ -1,10 +1,7 @@
--- 新增外部库地址
 g_lfs=require('lfs')
 package.path  = package.path..";"..g_lfs.writedir().."Scripts\\wwt\\?.lua"
 package.cpath = package.cpath..";"..g_lfs.writedir().."Scripts\\wwt\\?.dll"
--- 定义dcs export函数
 do
-	--初始化
 	if g_winwingInit==nil then
 		g_winwingInit=true
 		-- 声明
@@ -21,9 +18,7 @@ do
 		local _devVal=nil
 		local _key=nil
 		local _val=nil
-		--加载网络库
 		_winwing.net=require("wwtNetwork")
-		--启动网络
 		_winwing.net.start()
 
 		-- Include UFC Patch files and initalize for universal UFC plugin
@@ -37,20 +32,17 @@ do
 		do
 			--定义函数
 			_winwing.LuaExportStart=function()
-				--记录日志
 				log.write("WWT",log.INFO,"Export start!")
-				--任务就绪
 				local _send={}
 				_send["func"]="mission"
 				_send["msg"]="ready"
 				_winwing.net.send(_send)
 			end
-			
+
 			_winwing.LuaExportBeforeNextFrame=function()
 			end
 
 			_winwing.getNet=function(t)
-				--任务开始（仅一次）
 				if _winwing.mission==nil then
 					_winwing.mission=true
 					local _send={}
@@ -58,39 +50,48 @@ do
 					_send["msg"]="start"
 					_winwing.net.send(_send)
 				end
-				--获取机型
 				local _self=LoGetSelfData()
 				if _self~=nil then
 					if _winwing.mod~=_self.Name then
-						--记录机型
 						log.write("WWT",log.INFO,_self.Name)
 						_winwing.mod=_self.Name
-						
-						-- To support the Super Bug, override module name to be FA-18C Hornet
-						if _self.Name == "FA-18E" then _self.Name = "FA-18C_hornet" end
-						if _self.Name == "FA-18F" then _self.Name = "FA-18C_hornet" end
 
 						local _send={}
 						_send["func"]="mod"
 						_send["msg"]=_self.Name
+						
+						if _winwing.ufcPatch.useCustomUFC then
+							log.write("WWT", log.INFO, "UFC Patch Mod Enabled: Setting up now")
 
-						-- Required to trick SimApp Pro into allowing UFC/Com/Scratch pad commands
-						local isF18 = _self.Name == 'FA-18C_hornet'
-						local isF16 = _self.Name == 'F-16C_50'
-						-- To prevent Breaking the ICP, this mod will be disabled when flying the F18 or the F16
-						if isF18 == false and isF16 == false then
-							_winwing.ufcPatch.useCustomUFC = true
-							_send["msg"]="FA-18C_hornet"
+							-- To support the Super Bug, override module name to be FA-18C Hornet
+							if _self.Name == "FA-18E" then _self.Name = "FA-18C_hornet" end
+							if _self.Name == "FA-18F" then _self.Name = "FA-18C_hornet" end
+
+							local isF18 = _self.Name == 'FA-18C_hornet'
+							local isF16 = _self.Name == 'F-16C_50'
+							
+							-- When flying a module that is not a F18 or F16, let the mod work
+							if isF18 == false and isF16 == false then
+								log.write("WWT", log.INFO, "Detected module ".._self.Name..", UFC Patch Mod Enabled")
+
+								_winwing.ufcPatch.useCustomUFC = true
+								_send["msg"]="FA-18C_hornet"
+							else
+								-- Disable the UFC Mod and its effects
+								log.write("WWT", log.INFO, "Detected module ".._self.Name..", Disabling UFC Patch Mod")
+								_winwing.ufcPatch.useCustomUFC = false
+								_winwing.ufcPatch.overrideLights = false
+							end
 						end
 
 						_winwing.net.send(_send)
 					end
 				end
-				--接受网络数据并处理
 				local _get=_winwing.net.get()
 				if type(_get)=="table" and _winwing.mod~=nil then
-					if _get["func"]=="addOutput" then--添加输出（变化输出）
-						--遍历数据并添加
+
+					-- Let WWT Export control arguments sent to SimApp Pro
+					if _winwing.ufcPatch.overrideLights == false and _get["func"]=="addOutput" then
 						for _dev,_devVal in pairs(_get["args"]) do
 							for _key,_valOld in pairs(_devVal) do
 								if type(_winwing.output[_dev])~="table" then
@@ -198,14 +199,7 @@ do
 								_sendOutput["args"][_dev]={}
 							end
 
-							-- Force update LCD brightness to 80% for UFC
-							-- Required since SimApp Pro expects datum id 109 to be the UFC brightness
-							if _winwing.ufcPatch.useCustomUFC and _key == "109" then
-								_sendOutput["args"]["0"] = {}
-								_sendOutput["args"]["0"]["109"] = 0.9
-							else
-								_sendOutput["args"][_dev][_key]=_valNew
-							end
+							_sendOutput["args"][_dev][_key]=_valNew
 						end
 					end
 				end
@@ -219,6 +213,7 @@ do
 
 					-- Generate the payload to send to SimApp Pro
 					local ufcPayload  = _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
+					local lightPayload = _winwing.ufcPatch.generateLightExport(_winwing.interval, _winwing.mod)
 
 					-- Detect new custom UFC values, then send to SimApp Pro
 					if ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
@@ -232,9 +227,17 @@ do
 						ufcCommon["args"]["FA-18C_hornet"] = ufcPayload
 						_winwing.net.send(ufcCommon)
 					end
+
+					if _winwing.ufcPatch.overrideLights and lightPayload ~= nil and lightPayload ~= _winwing.ufcPatch.prevLightPayload then
+						_winwing.ufcPatch.prevLightPayload = lightPayload
+						local lightOutputMessage={}
+						lightOutputMessage["func"]="addOutput"
+						lightOutputMessage["args"]= {}
+						lightOutputMessage["args"]["0"] = lightPayload
+						_winwing.net.send(lightOutputMessage)
+					end
 				end
 
-				--发送之前添加的公共接口（变化发送）
 				local _sendCommon={}
 				_sendCommon["func"]="addCommon"
 				_sendCommon["timestamp"]=t
