@@ -1,8 +1,54 @@
 -- Credit to ANDR0ID on DCS Forums
 
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchMH60R = {}
+
+--MH-60R Light Program 
+function ufcPatchMH60R.generateLightData()
+	local MainPanel = GetDevice(0)
+	--Initial Data
+	local PwrSwposLights = MainPanel:get_argument_value(17)
+	
+--APU Status 
+	local APU_Pressure = MainPanel:get_argument_value(383) --UH-60 APU CAP ON
+	local apuLightState = 0
+	if APU_Pressure > 0.1 then 
+		apuLightState = 1
+	end
+
+--Parking Brake 
+	local ParkingBrake = MainPanel:get_argument_value(394) --UH-60 CAP Parking Brake Light
+	local landingGearLightState = 0 
+	if ParkingBrake > 0.1 then
+		landingGearLightState = 1
+	end
+
+--Weapon Status
+
+	if PwrSwposLights == 1 then 
+		GunArmStatus = MainPanel:get_argument_value(2000)
+		LOStatus = MainPanel:get_argument_value(2007) 
+		LIStatus = MainPanel:get_argument_value(2008)
+		RIStatus = MainPanel:get_argument_value(2009)
+		ROStatus = MainPanel:get_argument_value(2010)
+		RWRPower = MainPanel:get_argument_value(270)
+	end 	
+	
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = 0,
+		[lightsHelper.AG] = 0,
+		[lightsHelper.APU_READY] = apuLightState,
+		[lightsHelper.JETTISON_CTR] = GunArmStatus,
+		[lightsHelper.JETTISON_LI] = LIStatus,
+		[lightsHelper.JETTISON_LO] = LOStatus,
+		[lightsHelper.JETTISON_RI] = RIStatus,
+		[lightsHelper.JETTISON_RO] = ROStatus,
+		[lightsHelper.ALR_POWER] = RWRPower,
+	}
+end
 
 function ufcPatchMH60R.generateUFCData()
     -- Access the UH60 Main panel & other devices from DCS
@@ -313,4 +359,4 @@ function ufcPatchMH60R.generateUFCData()
     })
 end
 
-return ufcPatchMH60R --v1.0 by ANDR0ID
+return ufcPatchMH60R --v2.0 by ANDR0ID 16MAR25
