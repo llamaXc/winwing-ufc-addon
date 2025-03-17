@@ -36,6 +36,7 @@ local ufcPatchOV10 = require("ufcPatch\\aircraft\\ufcPatchOV10")
 local ufcPatchAH6J = require("ufcPatch\\aircraft\\ufcPatchAH6J")
 local ufcPatchSK60 = require("ufcPatch\\aircraft\\ufcPatchSK60")
 local ufcPatchOH58D = require("ufcPatch\\aircraft\\ufcPatchOH58D")
+local ufcPatchCH47F = require("ufcPatch\\aircraft\\ufcPatchCH47F")
 local ufcPatchGeneral = require("ufcPatch\\aircraft\\ufcPatchGeneral")
 ---------------------------------------
 
@@ -64,6 +65,7 @@ function ufcPatch.generateLightExport(deltaTime, moduleName)
             [lightsHelper.JETTISON_RO] = 0,
             [lightsHelper.LANDING_GEAR_HANDLE] = 0,
             [lightsHelper.APU_READY] = 0,
+            [lightsHelper.ALR_POWER] = 0,
         }
     end
 
@@ -72,6 +74,33 @@ function ufcPatch.generateLightExport(deltaTime, moduleName)
         moduleLightData = ufcPatchHuey.generateLightData()
     -- elseif moduleName == "TODO_NEW_MODULE" then 
     --     moduleLightData = ufcPatchModuleName.generateLightData()
+	elseif moduleName == "Mi-8MT" then
+		moduleLightData = ufcPatchMI8.generateLightData()
+
+	elseif moduleName == "Mi-24P" then
+		moduleLightData = ufcPatchMI24.generateLightData()
+
+	elseif moduleName == "CH-47Fbl1" then
+		moduleLightData = ufcPatchCH47F.generateLightData()
+		
+	elseif moduleName == "UH-60L" then
+		moduleLightData = ufcPatchUH60.generateLightData()
+		
+	elseif moduleName == "MH-60R" then
+		moduleLightData = ufcPatchMH60R.generateLightData()
+		
+	elseif moduleName == "AH-64D_BLK_II" then
+		moduleLightData = ufcPatchAH64.generateLightData()
+		
+	elseif moduleName == "OH58D" then
+		moduleLightData = ufcPatchOH58D.generateLightData()
+		
+	elseif moduleName == "JF-17" then
+		moduleLightData = ufcPatchJF17.generateLightData()	
+
+	elseif moduleName == "A-4E-C" then
+		moduleLightData = ufcPatchA4.generateLightData()	
+		
     end
 
     -- Merge in module data to common light payload
@@ -227,7 +256,13 @@ function ufcPatch.generateUFCExport(deltaTime, moduleName)
 		if ufcExportClock.canTransmitLatestPayload then
             return ufcPatchOH58D.generateUFCData()
 		end
-
+		
+		--CH-47F sends throttled data every 0.2 seconds
+    elseif moduleName == "CH-47Fbl1" then
+		if ufcExportClock.canTransmitLatestPayload then
+            return ufcPatchCH47F.generateUFCData()
+		end
+		
      --General Profile sends throttled data (THIS MUST ALWAYS BE LAST IN THE LIST)
     elseif moduleName ~= "FA-18C_hornet" then
         if ufcExportClock.canTransmitLatestPayload then
