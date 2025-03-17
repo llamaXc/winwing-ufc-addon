@@ -11,7 +11,8 @@ local LIGHTS = {
     JETTISON_LO = "156",
     JETTISON_RI = "158",
     JETTISON_RO = "160",
-    UFC_BRIGHTNESS = "109"
+    UFC_BRIGHTNESS = "109",
+	ALR_POWER = "276"
 }
 
 return LIGHTS

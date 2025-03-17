@@ -1,6 +1,89 @@
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchMI24 = {}
+
+--Mi-24 Light Program
+function ufcPatchMI24.generateLightData()
+	local MainPanel = GetDevice(0)
+	
+	local NoseGearDown = MainPanel:get_argument_value(230) --Mi-24 Pilot Nose Gear Down
+	local LeftGearDown = MainPanel:get_argument_value(229) --Mi-24 Pilot Left Gear Down
+	local RightGearDown = MainPanel:get_argument_value(231) --Mi-24 Pilot Right Gear Down
+	local NoseGearUp = MainPanel:get_argument_value(226) --Mi-24 Pilot Nose Gear Up
+	local LeftGearUp = MainPanel:get_argument_value(225) --Mi-24 Pilot Left Gear Up
+	local RightGearUp = MainPanel:get_argument_value(227) --Mi-24 Pilot Right Gear Up
+	
+	local R60Power = MainPanel:get_argument_value(1031) --Mi-24 R60 Power Light
+	local R60Fuse = MainPanel:get_argument_value(1034) --Mi-24 R60 Air / Ground 
+	
+	local RWRPower = MainPanel:get_argument_value(366) --Mi-24 Pilot RWR Power
+	
+	local Pylon1Light = MainPanel:get_argument_value(544) 
+	local Pylon2Light = MainPanel:get_argument_value(543) 
+	local Pylon3Light = MainPanel:get_argument_value(540) 
+	local Pylon4Light = MainPanel:get_argument_value(539) 
+	local JettisionArmLight = MainPanel:get_argument_value(548) 
+
+--APU On / Off Idication 
+	local APU_Pressure = MainPanel:get_argument_value(305) --Mi-24 Pilot APU Pressure
+	local apuLightState = 0
+	if APU_Pressure > 0.1 then 
+		apuLightState = 1
+	end
+
+--RWR Power 
+
+	local ALRLightState = 0 
+	if RWRPower ~= 0 then 
+	ALRLightState = 1
+	end 
+
+--R-60 Status 
+	local aaLightState = 0 
+	local agLightState = 0
+	if R60Power == 1 and R60Fuse == 1 then 
+	aaLightState = 1
+	agLightState = 0
+	elseif R60Power == 1 and R60Fuse == 0 then 
+	aaLightState = 0
+	agLightState = 1
+	elseif R60Power == 0 then 
+	aaLightState = 0
+	agLightState = 0
+	end 
+	
+--Pylon Status 
+	local LOStatus = Pylon1Light
+	local LIStatus = Pylon2Light
+	local RIStatus = Pylon3Light
+	local ROStatus = Pylon4Light
+	local JettisionArmed = JettisionArmLight
+	
+	
+--Landing Gear Condition 
+
+	local landingGearLightState = 0 
+	if ((NoseGearUp > 0) and (LeftGearUp > 0) and (RightGearUp > 0)) then 
+	landingGearLightState = 0
+	elseif ((NoseGearDown > 0) and (LeftGearDown > 0) and (RightGearDown > 0)) then 
+	landingGearLightState = 0
+	else landingGearLightState = 1
+	end
+
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = aaLightState,
+		[lightsHelper.AG] = agLightState,
+		[lightsHelper.APU_READY] = apuLightState,
+		[lightsHelper.JETTISON_CTR] = JettisionArmed,
+		[lightsHelper.JETTISON_LI] = LIStatus,
+		[lightsHelper.JETTISON_LO] = LOStatus,
+		[lightsHelper.JETTISON_RI] = RIStatus,
+		[lightsHelper.JETTISON_RO] = ROStatus,
+		[lightsHelper.ALR_POWER] = ALRLightState,
+	}
+end
 
 function ufcPatchMI24.generateUFCData()
 
@@ -353,3 +436,4 @@ end
 
 return ufcPatchMI24 --v1.0 by ANDR0ID
 					--v2.0 by ANDR0ID
+					--v3.0 by ANDR0ID 16MAR25

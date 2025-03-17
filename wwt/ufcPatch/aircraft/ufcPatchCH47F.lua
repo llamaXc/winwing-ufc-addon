@@ -1,6 +1,25 @@
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchCH47F = {}
+
+--CH-47 Light Program (To be updated)
+function ufcPatchCH47F.generateLightData()
+	local MainPanel = GetDevice(0)
+
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = 0,
+		[lightsHelper.AA] = 0,
+		[lightsHelper.AG] = 0,
+		[lightsHelper.APU_READY] = 0,
+		[lightsHelper.JETTISON_CTR] = 0,
+		[lightsHelper.JETTISON_LI] = 0,
+		[lightsHelper.JETTISON_LO] = 0,
+		[lightsHelper.JETTISON_RI] = 0,
+		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.ALR_POWER] = 0,
+	}
+end
 
 function ufcPatchCH47F.generateUFCData()
 
@@ -166,5 +185,5 @@ local HFRadio = GetDevice(50) --ARC-220 HF
     })
 end
 
-return ufcPatchCH47F --v1.0 by ANDR0ID 
+return ufcPatchCH47F --v1.1 by ANDR0ID 16MAR25 
 

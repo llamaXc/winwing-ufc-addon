@@ -61,7 +61,84 @@ Selected Windows: The status of selected windows, such as flaps, hook, spoiler, 
 ]]
 
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
+
 ufcPatchA4 = {}
+
+--A4 Light Program
+function ufcPatchA4.generateLightData()
+	local MainPanel = GetDevice(0)
+	
+	local NoseGear = MainPanel:get_argument_value(20)
+	local LeftGear = MainPanel:get_argument_value(21)
+	local RightGear = MainPanel:get_argument_value(22)
+	
+	local Station1 = MainPanel:get_argument_value(703)
+	local Station2 = MainPanel:get_argument_value(704)
+	local Station3 = MainPanel:get_argument_value(705)
+	local Station4 = MainPanel:get_argument_value(706)
+	local Station5 = MainPanel:get_argument_value(707)
+	
+	local UFCDisplaySetting = MainPanel:get_argument_value(895) --A4 Gunsight brightness
+	local UFCState = UFCDisplaySetting
+
+--Landing Gear Condition 
+	local landingGearLightState = 0 
+	if ((NoseGear == 1) and (LeftGear == 1) and (RightGear == 1)) then 
+	landingGearLightState = 0
+	elseif ((NoseGear == 0) and (LeftGear == 0) and (RightGear == 0)) then 
+	landingGearLightState = 0
+	else landingGearLightState = 1
+	end
+
+--Weapons 
+
+	if Station1 > 0 then 
+	Station1State = 1
+	else Station1State = 0
+	end 
+
+	if Station2 > 0 then 
+	Station2State = 1
+	else Station2State = 0
+	end
+
+	if Station3 > 0 then 
+	Station3State = 1
+	else Station3State = 0
+	end
+
+	if Station4 > 0 then 
+	Station4State = 1
+	else Station4State = 0
+	end
+	
+	if Station5 > 0 then 
+	Station5State = 1
+	else Station5State = 0
+	end
+	
+--RADAR 
+	local RadarSwitch = MainPanel:get_argument_value(120) 
+	if RadarSwitch > 0.12 then 
+	RadarState = 1
+	else RadarState = 0 
+	end 
+
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = 0,
+		[lightsHelper.AG] = 0,
+		[lightsHelper.APU_READY] = 0,
+		[lightsHelper.JETTISON_CTR] = Station3State,
+		[lightsHelper.JETTISON_LI] = Station2State,
+		[lightsHelper.JETTISON_LO] = Station1State,
+		[lightsHelper.JETTISON_RI] = Station4State,
+		[lightsHelper.JETTISON_RO] = Station5State,
+		[lightsHelper.ALR_POWER] = RadarState,
+		[lightsHelper.UFC_BRIGHTNESS] = UFCState
+	}
+end
 
 function ufcPatchA4.generateUFCData()
     local MainPanel = GetDevice(0)

@@ -1,6 +1,43 @@
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchOH58D = {}
+
+--OH-58D Light Program 
+function ufcPatchOH58D.generateLightData()
+	local MainPanel = GetDevice(0)
+--Initial Data
+	local PwrSwposLights = MainPanel:get_argument_value(248)
+	local RWRPower = 0 
+	
+--Landing Gear (On ground) 
+	local heightAboveGround = LoGetAltitudeAboveGroundLevel()
+	local landingGearLightState = 0
+	if heightAboveGround <= 1 then
+		landingGearLightState = 1
+	end
+
+--CMWS Status
+	local CMWSSwitch = MainPanel:get_argument_value(38)
+	if PwrSwposLights == 1 and CMWSSwitch == 0 then 
+		RWRPower = 1
+	else RWRPower = 0
+	end 	
+	
+	
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = 0,
+		[lightsHelper.AG] = 0,
+		[lightsHelper.APU_READY] = 0,
+		[lightsHelper.JETTISON_CTR] = 0,
+		[lightsHelper.JETTISON_LI] = 0,
+		[lightsHelper.JETTISON_LO] = 0,
+		[lightsHelper.JETTISON_RI] = 0,
+		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.ALR_POWER] = RWRPower,
+	}
+end
 
 function ufcPatchOH58D.generateUFCData()
 
@@ -179,5 +216,5 @@ local ArmStatus = "S"
     })
 end
 
-return ufcPatchOH58D --v1.0 by ANDR0ID 
+return ufcPatchOH58D --v2.0 by ANDR0ID 16MAR25 
 

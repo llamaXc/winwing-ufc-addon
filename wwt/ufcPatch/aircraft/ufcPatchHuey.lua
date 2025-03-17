@@ -31,6 +31,7 @@ function ufcPatchHuey.generateLightData()
 		[lightsHelper.JETTISON_LO] = 0,
 		[lightsHelper.JETTISON_RI] = 0,
 		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.ALR_POWER] = 0,
 	}
 end
 
