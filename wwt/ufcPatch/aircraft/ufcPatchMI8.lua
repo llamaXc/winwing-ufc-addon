@@ -13,9 +13,10 @@ function ufcPatchMI8.generateLightData()
 		apuLightState = 1
 	end
 
-	local heightAboveGround = LoGetAltitudeAboveGroundLevel()
-	local landingGearLightState = 0
-	if heightAboveGround <= 2.5 then
+--Parking Brake 
+	local ParkingBrake = MainPanel:get_argument_value(930) --Mi-8 Parking Brake
+	local landingGearLightState = 0 
+	if ParkingBrake > 0.1 then
 		landingGearLightState = 1
 	end
 
