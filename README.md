@@ -31,7 +31,7 @@ This does not limit any Winwing product functionallity and it 100% compatible.
 
 Install Video: https://www.youtube.com/watch?v=_H_wJi3YCuY
 
- 1. Download the <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.20/wwt.zip" download>Latest Release<a/>
+ 1. Download the <a href="https://github.com/llamaXc/winwing-ufc-addon/releases/download/V1.0.21/wwt.zip" download>Latest Release<a/>
  2. Unzip the .zip file using 7-zip or some other compression program.
  3. You will have a folder titled `wwt`.
  4. Ensure SimApp Pro is running
