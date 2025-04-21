@@ -211,12 +211,16 @@ do
 
 				if _winwing.ufcPatch.useCustomUFC then
 
-					-- Generate the payload to send to SimApp Pro
-					local ufcPayload  = _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
-					local lightPayload = _winwing.ufcPatch.generateLightExport(_winwing.interval, _winwing.mod)
-
+					local success, ufcPayload = pcall(function()
+						return _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
+					end)
+					
+					local lightSuccess, lightPayload = pcall(function()
+						return _winwing.ufcPatch.generateLightExport(_winwing.interval, _winwing.mod)
+					end)
+					
 					-- Detect new custom UFC values, then send to SimApp Pro
-					if ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
+					if success and lightSuccess and ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
 						_winwing.ufcPatch.prevUFCPayload = ufcPayload
 						local ufcCommon={}
 						ufcCommon["func"]="addCommon"
