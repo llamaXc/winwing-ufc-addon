@@ -105,16 +105,18 @@ do
 						local _send={}
 						_send["func"]=_get["func"]
 						for _dev,_devVal in pairs(_get["args"]) do
-							GetDevice(_dev):update_arguments()
-							for _key,_valOld in pairs(_devVal) do
-								local _valNew=GetDevice(_dev):get_argument_value(_key)
-								if type(_send["args"])~='table' then
-									_send["args"]={}
+							if _dev ~= nil then
+								GetDevice(_dev):update_arguments()
+								for _key,_valOld in pairs(_devVal) do
+									local _valNew=GetDevice(_dev):get_argument_value(_key)
+									if type(_send["args"])~='table' then
+										_send["args"]={}
+									end
+									if type(_send["args"][_dev])~='table' then
+										_send["args"][_dev]={}
+									end
+									_send["args"][_dev][_key]=_valNew
 								end
-								if type(_send["args"][_dev])~='table' then
-									_send["args"][_dev]={}
-								end
-								_send["args"][_dev][_key]=_valNew
 							end
 						end
 						_winwing.net.send(_send)
@@ -184,22 +186,24 @@ do
 				_sendOutput["timestamp"]=t
 
 				for _dev,_devVal in pairs(_winwing.output) do
-					if type(GetDevice(_dev))~='table' then
-						break
-					end
-					GetDevice(_dev):update_arguments()
-					for _key,_valOld in pairs(_devVal) do
-						local _valNew=GetDevice(_dev):get_argument_value(_key)
-						if _valNew~=_valOld then
-							_winwing.output[_dev][_key]=_valNew
-							if type(_sendOutput["args"])~='table' then
-								_sendOutput["args"]={}
-							end
-							if type(_sendOutput["args"][_dev])~='table' then
-								_sendOutput["args"][_dev]={}
-							end
+					if _dev ~= nil then
+						if type(GetDevice(_dev))~='table' then
+							break
+						end
+						GetDevice(_dev):update_arguments()
+						for _key,_valOld in pairs(_devVal) do
+							local _valNew=GetDevice(_dev):get_argument_value(_key)
+							if _valNew~=_valOld then
+								_winwing.output[_dev][_key]=_valNew
+								if type(_sendOutput["args"])~='table' then
+									_sendOutput["args"]={}
+								end
+								if type(_sendOutput["args"][_dev])~='table' then
+									_sendOutput["args"][_dev]={}
+								end
 
-							_sendOutput["args"][_dev][_key]=_valNew
+								_sendOutput["args"][_dev][_key]=_valNew
+							end
 						end
 					end
 				end
@@ -210,6 +214,7 @@ do
 
 
 				if _winwing.ufcPatch.useCustomUFC then
+					log.write("WWT", log.INFO, "Running use custom ufc now")
 
 					local success, ufcPayload = pcall(function()
 						return _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
