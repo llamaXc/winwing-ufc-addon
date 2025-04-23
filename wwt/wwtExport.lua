@@ -105,7 +105,7 @@ do
 						local _send={}
 						_send["func"]=_get["func"]
 						for _dev,_devVal in pairs(_get["args"]) do
-							if _dev ~= nil then
+							if _dev ~= nil and GetDevice(_dev) ~= nil and type(GetDevice(_dev)) == 'table' then
 								GetDevice(_dev):update_arguments()
 								for _key,_valOld in pairs(_devVal) do
 									local _valNew=GetDevice(_dev):get_argument_value(_key)
@@ -186,10 +186,7 @@ do
 				_sendOutput["timestamp"]=t
 
 				for _dev,_devVal in pairs(_winwing.output) do
-					if _dev ~= nil then
-						if type(GetDevice(_dev))~='table' then
-							break
-						end
+					if _dev ~= nil and GetDevice(_dev) ~= nil and type(GetDevice(_dev)) == 'table' then
 						GetDevice(_dev):update_arguments()
 						for _key,_valOld in pairs(_devVal) do
 							local _valNew=GetDevice(_dev):get_argument_value(_key)
@@ -215,6 +212,9 @@ do
 
 				if _winwing.ufcPatch.useCustomUFC then
 					log.write("WWT", log.INFO, "Running use custom ufc now")
+					-- Generate the payload to send to SimApp Pro
+					-- local ufcPayload  = _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
+					-- local lightPayload = _winwing.ufcPatch.generateLightExport(_winwing.interval, _winwing.mod)
 
 					local success, ufcPayload = pcall(function()
 						return _winwing.ufcPatch.generateUFCExport(_winwing.interval, _winwing.mod)
@@ -224,8 +224,9 @@ do
 						return _winwing.ufcPatch.generateLightExport(_winwing.interval, _winwing.mod)
 					end)
 					
+
 					-- Detect new custom UFC values, then send to SimApp Pro
-					if success and lightSuccess and ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
+					if ufcPayload ~= nil and ufcPayload ~= _winwing.ufcPatch.prevUFCPayload then
 						_winwing.ufcPatch.prevUFCPayload = ufcPayload
 						local ufcCommon={}
 						ufcCommon["func"]="addCommon"
@@ -254,7 +255,7 @@ do
 					local _func,_err=loadstring(_arg.identifyMethod)
 					if _func then
 						local _status,_result = pcall(_func)
-						if _result~=_arg.value then
+						if _arg ~= nil and _result ~= nil and _winwing.json:encode(_result)~=_winwing.json:encode(_arg.value) then
 							if type(_sendCommon["args"])~='table' then
 								_sendCommon["args"]={}
 							end
