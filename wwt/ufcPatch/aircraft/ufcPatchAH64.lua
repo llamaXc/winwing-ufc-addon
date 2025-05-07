@@ -1,5 +1,49 @@
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
+
 ufcPatchAH64 = {}
+
+--AH-64 Light Program 
+function ufcPatchAH64.generateLightData()
+	local MainPanel = GetDevice(0)
+--Initial Data
+	local PwrSwposLights = MainPanel:get_argument_value(315)
+	local RWRPower = 0 
+	
+--Parking Brake 
+	local ParkingBrake = MainPanel:get_argument_value(634) --AH-64 Parking Brake Display Indicator
+	local landingGearLightState = 0 
+	if ParkingBrake > 0.1 then
+		landingGearLightState = 1
+	end
+
+--CMWS Status
+	local CMWSSwitch = MainPanel:get_argument_value(610) --CMWS Switch
+	if PwrSwposLights ~= 0 and CMWSSwitch == 0 then 
+		RWRPower = 1
+	else RWRPower = 0
+	end 	
+	
+--APU_READY
+	local APU_Status = MainPanel:get_argument_value(406) --AH-64 APU ON Display Indicator
+	if PwrSwposLights ~= 0 and APU_Status == 1 then
+		apuLightState = 1
+	else apuLightState = 0 
+	end 	
+	
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = 0,
+		[lightsHelper.AG] = 0,
+		[lightsHelper.APU_READY] = apuLightState,
+		[lightsHelper.JETTISON_CTR] = 0,
+		[lightsHelper.JETTISON_LI] = 0,
+		[lightsHelper.JETTISON_LO] = 0,
+		[lightsHelper.JETTISON_RI] = 0,
+		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.ALR_POWER] = RWRPower,
+	}
+end
 
 -- Timestamp for last KU data update
 local lastKUDataTimestamp = nil
@@ -203,3 +247,4 @@ return ufcPatchAH64
 
 --v1.0 by Wostg
 --v2.0 by ANDR0ID 
+--v3.0 by ANDR0ID 16MAR25

@@ -1,6 +1,38 @@
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchMI8 = {}
+
+--Mi-8 Light Program
+function ufcPatchMI8.generateLightData()
+	local MainPanel = GetDevice(0)
+
+	local APU_Pressure = MainPanel:get_argument_value(403) --Mi-8 APU Pressure
+	local apuLightState = 0
+	if APU_Pressure > 0.1 then 
+		apuLightState = 1
+	end
+
+--Parking Brake 
+	local ParkingBrake = MainPanel:get_argument_value(930) --Mi-8 Parking Brake
+	local landingGearLightState = 0 
+	if ParkingBrake > 0.1 then
+		landingGearLightState = 1
+	end
+
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = 0,
+		[lightsHelper.AG] = agLightState,
+		[lightsHelper.APU_READY] = apuLightState,
+		[lightsHelper.JETTISON_CTR] = 0,
+		[lightsHelper.JETTISON_LI] = 0,
+		[lightsHelper.JETTISON_LO] = 0,
+		[lightsHelper.JETTISON_RI] = 0,
+		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.ALR_POWER] = 0,
+	}
+end
 
 function ufcPatchMI8.generateUFCData()
 
@@ -339,3 +371,4 @@ end
 
 return ufcPatchMI8 --v1.0 by ANDR0ID
 				   --v2.0 by ANDR0ID
+				   --v3.0 by ANDR0ID 16MAR25

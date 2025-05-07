@@ -1,6 +1,46 @@
 local ufcUtils = require("ufcPatch\\utilities\\ufcPatchUtils")
+local lightsHelper = require("ufcPatch\\utilities\\wwLights")
 
 ufcPatchJF17 = {}
+
+--JF-17 Light Program
+function ufcPatchJF17.generateLightData()
+	local MainPanel = GetDevice(0)
+
+	local AAlight = MainPanel:get_argument_value(163)
+	local AG1light = MainPanel:get_argument_value(164)
+	local AG2light = MainPanel:get_argument_value(165)
+	
+	local UFCDisplaySetting = MainPanel:get_argument_value(732)
+	local UFCState = UFCDisplaySetting
+	
+	if AAlight ~= 0 then
+		aaLightState = "1"
+		agLightState = "0"
+	elseif AG1light ~= 0 then
+		aaLightState = "0"
+		agLightState = "1"
+	elseif AG2light ~= 0 then
+		aaLightState = "0"
+		agLightState = "1"
+	end
+
+	local landingGearLightState = MainPanel:get_argument_value(107)
+
+	return {
+		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.AA] = aaLightState,
+		[lightsHelper.AG] = agLightState,
+		[lightsHelper.APU_READY] = 0,
+		[lightsHelper.JETTISON_CTR] = 0,
+		[lightsHelper.JETTISON_LI] = 0,
+		[lightsHelper.JETTISON_LO] = 0,
+		[lightsHelper.JETTISON_RI] = 0,
+		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.ALR_POWER] = 0,
+		[lightsHelper.UFC_BRIGHTNESS] = UFCState
+	}
+end
 
 -- JF-17 Thunder: Shows UFCP values
 function ufcPatchJF17.generateUFCData()
@@ -106,4 +146,4 @@ function ufcPatchJF17.generateUFCData()
 
 end
 
-return ufcPatchJF17  --v1.0 by ANDR0ID
+return ufcPatchJF17  --v2.1 by ANDR0ID 16MAR25
