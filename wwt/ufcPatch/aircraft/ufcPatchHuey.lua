@@ -50,7 +50,7 @@ function ufcPatchHuey.generateUFCData()
 	local FM1Freq = 0
 	local UHFFreq = 0
 	local VHFFreq = 0
-	local MasterArmLamp = 1
+	local MasterArmLamp = 0
 	local WepsSwitch = 0
 	local MasterArm = 0
 	local RocketInfo = 0
@@ -66,7 +66,7 @@ function ufcPatchHuey.generateUFCData()
 		if UHFRadio then UHFFreq = UHFRadio:get_frequency() or 0 end
 		if VHFRadio then VHFFreq = VHFRadio:get_frequency() or 0 end
 
-		MasterArmLamp = MainPanel:get_argument_value(254) or 1
+		MasterArmLamp = MainPanel:get_argument_value(254) or 0
 		WepsSwitch = MainPanel:get_argument_value(256) or 0
 		MasterArm = MainPanel:get_argument_value(252) or 0
 		RocketInfo = MainPanel:get_argument_value(257) or 0
