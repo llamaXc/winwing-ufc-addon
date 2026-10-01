@@ -15,7 +15,7 @@ function ufcPatchHuey.generateLightData()
 	local starterGenSwitch = MainPanel:get_argument_value(220)
 	local apuLightState = starterGenSwitch
 
-	local MasterCautLight = MainPanel:get_argument_value(254)
+	local MasterCautLight = MainPanel:get_argument_value(277)
 
 	local heightAboveGround = LoGetAltitudeAboveGroundLevel()
 	local landingGearLightState = 0
