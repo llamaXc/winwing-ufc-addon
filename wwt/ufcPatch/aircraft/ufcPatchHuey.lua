@@ -15,6 +15,8 @@ function ufcPatchHuey.generateLightData()
 	local starterGenSwitch = MainPanel:get_argument_value(220)
 	local apuLightState = starterGenSwitch
 
+	local MasterCautLight = MainPanel:get_argument_value(254)
+
 	local heightAboveGround = LoGetAltitudeAboveGroundLevel()
 	local landingGearLightState = 0
 	if heightAboveGround <= 1.7 then
@@ -22,15 +24,23 @@ function ufcPatchHuey.generateLightData()
 	end
 
 	return {
-		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.LANDING_GEAR_HANDLE] = 0,
+		[lightsHelper.HOOK] = 0,
+		[lightsHelper.GEAR_NOSE] = landingGearLightState,
+		[lightsHelper.GEAR_LEFT] = landingGearLightState,
+		[lightsHelper.GEAR_RIGHT] = landingGearLightState,
+		[lightsHelper.FLAP_HALF] = 0,
+		[lightsHelper.FLAP_FULL] = 0,
+		[lightsHelper.FLAPS] = 0,
 		[lightsHelper.AA] = 0,
 		[lightsHelper.AG] = agLightState,
 		[lightsHelper.APU_READY] = apuLightState,
+		[lightsHelper.MASTER_CAUTION] = MasterCautLight,
 		[lightsHelper.JETTISON_CTR] = 0,
 		[lightsHelper.JETTISON_LI] = 0,
 		[lightsHelper.JETTISON_LO] = 0,
 		[lightsHelper.JETTISON_RI] = 0,
-		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.JETTISON_RO] = 0
 	}
 end
 
@@ -46,16 +56,30 @@ function ufcPatchHuey.generateUFCData()
 	--Initial Data
 	local PwrSwpos = MainPanel:get_argument_value(219)
 
+	-- Define safe defaults so the script doesn't crash when the battery is OFF
+	local FM1Freq = 0
+	local UHFFreq = 0
+	local VHFFreq = 0
+	local MasterArmLamp = 0
+	local WepsSwitch = 0
+	local MasterArm = 0
+	local RocketInfo = 0
+
+	-- Pre-declare display strings to avoid nil crashes
+	local RadioDisplay = "000000"
+	local RadioDisplay1 = " "
+	local RadioDisplay2 = " "
+
 	--Checks UH-1 power and starts data pull
 	if PwrSwpos == 0 then --0 is Battery on for the Huey
-		FM1Freq = FMRadio1:get_frequency()
-		UHFFreq = UHFRadio:get_frequency()
-		VHFFreq = VHFRadio:get_frequency()
+		if FMRadio1 then FM1Freq = FMRadio1:get_frequency() or 0 end
+		if UHFRadio then UHFFreq = UHFRadio:get_frequency() or 0 end
+		if VHFRadio then VHFFreq = VHFRadio:get_frequency() or 0 end
 
-		MasterArmLamp = MainPanel:get_argument_value(254)
-		WepsSwitch = MainPanel:get_argument_value(256)
-		MasterArm = MainPanel:get_argument_value(252)
-		RocketInfo = MainPanel:get_argument_value(257)
+		MasterArmLamp = MainPanel:get_argument_value(254) or 0
+		WepsSwitch = MainPanel:get_argument_value(256) or 0
+		MasterArm = MainPanel:get_argument_value(252) or 0
+		RocketInfo = MainPanel:get_argument_value(257) or 0
 	end
 
 	-- Got these argument values from: <DCS_INSTALL>\Mods\aircraft\Uh-1H\Cockpit\Scripts\mainpanel_init.lua
