@@ -15,6 +15,8 @@ function ufcPatchHuey.generateLightData()
 	local starterGenSwitch = MainPanel:get_argument_value(220)
 	local apuLightState = starterGenSwitch
 
+	local MasterCautLight = MainPanel:get_argument_value(254)
+
 	local heightAboveGround = LoGetAltitudeAboveGroundLevel()
 	local landingGearLightState = 0
 	if heightAboveGround <= 1.7 then
@@ -22,15 +24,23 @@ function ufcPatchHuey.generateLightData()
 	end
 
 	return {
-		[lightsHelper.LANDING_GEAR_HANDLE] = landingGearLightState,
+		[lightsHelper.LANDING_GEAR_HANDLE] = 0,
+		[lightsHelper.HOOK] = 0,
+		[lightsHelper.GEAR_NOSE] = landingGearLightState,
+		[lightsHelper.GEAR_LEFT] = landingGearLightState,
+		[lightsHelper.GEAR_RIGHT] = landingGearLightState,
+		[lightsHelper.FLAP_HALF] = 0,
+		[lightsHelper.FLAP_FULL] = 0,
+		[lightsHelper.FLAPS] = 0,
 		[lightsHelper.AA] = 0,
 		[lightsHelper.AG] = agLightState,
 		[lightsHelper.APU_READY] = apuLightState,
+		[lightsHelper.MASTER_CAUTION] = MasterCautLight,
 		[lightsHelper.JETTISON_CTR] = 0,
 		[lightsHelper.JETTISON_LI] = 0,
 		[lightsHelper.JETTISON_LO] = 0,
 		[lightsHelper.JETTISON_RI] = 0,
-		[lightsHelper.JETTISON_RO] = 0,
+		[lightsHelper.JETTISON_RO] = 0
 	}
 end
 
