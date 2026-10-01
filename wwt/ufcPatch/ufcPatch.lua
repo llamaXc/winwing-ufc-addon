@@ -42,7 +42,7 @@ local ufcPatchGeneral = require("ufcPatch\\aircraft\\ufcPatchGeneral")
 -- Common light settings for all modules to use
 function ufcPatch.getCommonLightData()
     return {
-        [lightsHelper.UFC_BRIGHTNESS] = 0.9
+        [lightsHelper.UFC_BRIGHTNESS] = 1.0
     }
 end
 
@@ -54,16 +54,24 @@ function ufcPatch.generateLightExport(deltaTime, moduleName)
     -- First time reset all lights
     if ufcPatch.prevLightPayload == nil then
         return {
-            [lightsHelper.UFC_BRIGHTNESS] = 0.9,
-            [lightsHelper.AA] = 0,
-            [lightsHelper.AG] = 0,
-            [lightsHelper.JETTISON_CTR] = 0,
-            [lightsHelper.JETTISON_LI] = 0,
-            [lightsHelper.JETTISON_LO] = 0,
-            [lightsHelper.JETTISON_RI] = 0,
-            [lightsHelper.JETTISON_RO] = 0,
+            [lightsHelper.UFC_BRIGHTNESS] = 1.0,
             [lightsHelper.LANDING_GEAR_HANDLE] = 0,
-            [lightsHelper.APU_READY] = 0,
+			[lightsHelper.HOOK] = 0,
+			[lightsHelper.GEAR_NOSE] = 0,
+			[lightsHelper.GEAR_LEFT] = 0,
+			[lightsHelper.GEAR_RIGHT] = 0,
+			[lightsHelper.FLAP_HALF] = 0,
+			[lightsHelper.FLAP_FULL] = 0,
+			[lightsHelper.FLAPS] = 0,
+			[lightsHelper.AA] = 0,
+			[lightsHelper.AG] = 0,
+			[lightsHelper.APU_READY] = 0,
+			[lightsHelper.MASTER_CAUTION] = 0,
+			[lightsHelper.JETTISON_CTR] = 0,
+			[lightsHelper.JETTISON_LI] = 0,
+			[lightsHelper.JETTISON_LO] = 0,
+			[lightsHelper.JETTISON_RI] = 0,
+			[lightsHelper.JETTISON_RO] = 0,
         }
     end
 
