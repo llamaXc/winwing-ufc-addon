@@ -5,8 +5,8 @@ local LIGHTS = {
     AA = "47",
     AG = "48",
     LANDING_GEAR_HANDLE = "227",
-	HOOK = "294",
-	GEAR_NOSE = "166",
+    HOOK = "294",
+    GEAR_NOSE = "166",
     GEAR_LEFT = "165",
     GEAR_RIGHT = "167",
     FLAP_HALF = "163",
@@ -18,7 +18,7 @@ local LIGHTS = {
     JETTISON_LO = "156",
     JETTISON_RI = "158",
     JETTISON_RO = "160",
-	MASTER_CAUTION = "13",
+    MASTER_CAUTION = "13",
     UFC_BRIGHTNESS = "109"
 }
 
